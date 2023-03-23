@@ -18,6 +18,6 @@ Integrants del grup:
 
 ### Estructura dels directoris
 
-- /: Conté una implementació del model de difusió de Independent Cascade.
-- /v2: Conté una segona implementació funcional del model de difusió de Independent Cascade.
+- /:
+- /IC: Conté una implementació funcional del model de difusió de Independent Cascade.
 - 
