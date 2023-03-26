@@ -72,7 +72,7 @@ class IC_difussionGraph {
                 // check neightbours
                 for(int i = 0; i < g[tmp].size(); i++){
                     steps++;
-                        if(not spreadedNodes[i]){
+                        if(not spreadedNodes[g[tmp][i]]){
                             // tries propagation
                             double shot_p = (rand()%100)/100.0;
                             if(shot_p > this-> p){
