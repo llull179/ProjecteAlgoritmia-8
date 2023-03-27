@@ -9,7 +9,7 @@ using namespace std;
 
 class IC_difussionGraph {
 
-    private:
+    protected:
 
         // graph dimension
         int n, m;
@@ -21,7 +21,6 @@ class IC_difussionGraph {
         queue <int> nodesToSpread;
         // spreading probability
         double p;
-
 
     public:
         // constructor
