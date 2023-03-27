@@ -17,11 +17,9 @@ int main(){
 
         // subset of vertices
     g.readStartingSubset();
-
+    
     // tries diffusion
-    g.propagate();      
+    g.propagate();
 
-    // prints solution
-    g.printDifusionSubstet();
 
 }

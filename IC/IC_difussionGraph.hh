@@ -1,6 +1,8 @@
 #include <vector> 
 #include <iostream>
 #include <queue>
+#include <chrono>
+#include <fstream>
 
 
 using namespace std;
@@ -59,14 +61,18 @@ class IC_difussionGraph {
         }
 
         // propagation
-        void propagate(){
+        int propagate(){
+            int steps = 0;
+            auto begin = std::chrono::high_resolution_clock::now();
+
             while(not nodesToSpread.empty()){
                 // get next element to propagate
                 int tmp = nodesToSpread.front();
 
                 // check neightbours
                 for(int i = 0; i < g[tmp].size(); i++){
-                        if(not spreadedNodes[i]){
+                    steps++;
+                        if(not spreadedNodes[g[tmp][i]]){
                             // tries propagation
                             double shot_p = (rand()%100)/100.0;
                             if(shot_p > this-> p){
@@ -78,20 +84,32 @@ class IC_difussionGraph {
                 // node tmp does not try propagation again
                 nodesToSpread.pop();
             }
+            
+            // Prints output to a file
+            ofstream file;
+            file.open ("output-IC");           
+
+            // stop elapsed timer
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+            file << "Difusion completed in " << steps << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
+
+            file << "Propagated nodes:";
+            int solSize = 0;
+            for(int i = 0; i < this->n; i++){
+                if(spreadedNodes[i]){
+                    solSize ++;
+                    file << " " << i ;
+                }
+            }
+            file << endl;
+            file.close();
+            return solSize;
         }
 
         // print graph
         void printGraph(){
-            cout << "Displaying graph ..." << endl;
-            for(int i = 0; i < this->n; i++){
-                cout << "node " << i << " : ";
-                cout << "{";
-                for (int j = 0; j < g[i].size(); j++){
-                    if(j == 0) cout << g[i][j];
-                    else cout << ", " << g[i][j];
-                }
-                cout << "}" << endl;
-            }
+            
         }
 
         // print nodes belong to the diffusion subset
