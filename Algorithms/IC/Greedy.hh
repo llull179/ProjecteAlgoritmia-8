@@ -36,7 +36,13 @@ class Greedy: private IC_difussionGraph{
             list <int> subset;
             vector<bool> inSubset(n, false);
 
+
+            int iteration = 0;
+
             while(propagatedNodes != this->n){
+
+                cout << "Iteration " << iteration << endl;
+
                 // pick wich node to propagate
                 double maxInfluence = 0.0;
                 int idx = 0;
@@ -55,7 +61,11 @@ class Greedy: private IC_difussionGraph{
                 subset.push_back(idx);
                 readStartingSubset(subset);
                 propagatedNodes = propagate();
+
+                iteration++;
             }
+
+            cout << "Difusion ended, check output-IC file to see benchmarks and the result" << endl;
         }
 
         double computeNodeInfluence(int src){

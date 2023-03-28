@@ -77,6 +77,15 @@ class IC_difussionGraph {
             int steps = 0;
             auto begin = std::chrono::high_resolution_clock::now();
 
+            // print initial subset to check
+            for(int i = 0; i < n; i++){
+                if(spreadedNodes[i]){
+                    cout << i << " ";
+                }
+            }cout << endl;
+
+
+
             while(not nodesToSpread.empty()){
                 // get next element to propagate
                 int tmp = nodesToSpread.front();
@@ -87,7 +96,7 @@ class IC_difussionGraph {
                         if(not spreadedNodes[g[tmp][i]]){
                             // tries propagation
                             double shot_p = (rand()%100)/100.0;
-                            if(shot_p > this-> p){
+                            if(shot_p > (1-this-> p)){
                                 nodesToSpread.push(g[tmp][i]);
                                 spreadedNodes[g[tmp][i]] = true;
                             }

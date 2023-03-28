@@ -16,10 +16,8 @@ int main(){
     cout << "Introduce edges in the folllowing format : i j " << endl;
     g.readEdges(m, p);
 
+
     // begin difusion
     g.beginDifusion(); 
-
-
-
 }
 
