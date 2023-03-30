@@ -75,19 +75,23 @@ class IC_difussionGraph {
         int propagate(){
 
             int steps = 0;
+            int numPropagatedNodes = nodesToSpread.size();
             auto begin = std::chrono::high_resolution_clock::now();
 
             while(not nodesToSpread.empty()){
+                
                 // get next element to propagate
                 int tmp = nodesToSpread.front();
-
+                steps++;
                 // check neightbours
                 for(int i = 0; i < g[tmp].size(); i++){
-                        steps++;
+                        
                         if(not spreadedNodes[g[tmp][i]]){
                             // tries propagation
                             double shot_p = (rand()%100)/100.0;
                             if(shot_p > (1-this-> p)){
+                                // propagates to new node
+                                numPropagatedNodes++;
                                 nodesToSpread.push(g[tmp][i]);
                                 spreadedNodes[g[tmp][i]] = true;
                             }
@@ -96,37 +100,24 @@ class IC_difussionGraph {
                 // node tmp does not try propagation again
                 nodesToSpread.pop();
             }
-            
-            // Prints output to a file
-            ofstream file;
-            file.open ("output-IC");           
-
-            // stop elapsed timer
-            auto end = std::chrono::high_resolution_clock::now();
-            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-            file << "Difusion completed in " << steps << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
-
-            file << "Propagated nodes:";
-            int solSize = 0;
-            for(int i = 0; i < this->n; i++){
-                if(spreadedNodes[i]){
-                    solSize ++;
-                }
-            }
-            file << endl;
-            file.close();
 
             // empty used data structures
             queue<int>empty;
             swap(this-> nodesToSpread, empty);
             spreadedNodes = vector<bool>(n, false);
 
-            return solSize;
+            return numPropagatedNodes;
         }
 
         // print graph
         void printGraph(){
-            
+            for(int i = 0; i<n; i++){
+                cout << "node " << i << " :";
+                for(int j = 0; j< g[i].size(); j++){
+                    cout << " " <<  g[i][j];
+                }
+                cout << endl;
+            }
         }
 
         // print nodes belong to the diffusion subset

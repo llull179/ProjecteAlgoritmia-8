@@ -1,6 +1,7 @@
 #include "IC_difussionGraph.hh"
 #include <cmath>
 #include <list>
+#include <fstream>
 
 
 typedef pair<int,int> ppair;
@@ -10,12 +11,16 @@ class Greedy: private IC_difussionGraph{
 
     public:
 
+        // constructor and parametrized constructor ------------------------
+        Greedy(){}
+
         Greedy(int n){
             this-> n = n;
             g.resize(n);
-            cout << g.size() << endl;
             spreadedNodes.resize(n, false);
         }
+
+        // public methods --------------------------------------------------
 
         void readEdges(int m, double p){
             this-> m = m;
@@ -30,18 +35,46 @@ class Greedy: private IC_difussionGraph{
             this->p = p;     
         }
 
+        void readEdgesFromFile(double p, string filename){
+            this-> m = 0;
+            this->p = p;     
+
+            // read graph from file
+            ifstream file(filename);
+
+            // read graph dimension
+            file >> this-> n;
+            g.resize(n);
+            spreadedNodes.resize(n, false);
+
+            // read graph edges
+            int a, b;
+            while(file >> a >> b){
+                // add edge
+                g[a].push_back(b);
+                g[b].push_back(a);
+                this->m++;
+            }
+            file.close();
+        }
+
         void beginDifusion(){
             // initially no nodes propagated
             int propagatedNodes = 0;
             list <int> subset;
             vector<bool> inSubset(n, false);
 
+            // Prints is redirected to a file
+            ofstream file;
+            file.open("output-IC-difusion");   
+
+            // sets timer
+            auto begin = std::chrono::high_resolution_clock::now();
+
 
             int iteration = 0;
 
             while(propagatedNodes != this->n){
-
-                cout << "Iteration " << iteration << endl;
 
                 // pick wich node to propagate
                 double maxInfluence = 0.0;
@@ -63,16 +96,25 @@ class Greedy: private IC_difussionGraph{
                 propagatedNodes = propagate();
 
                 iteration++;
+
+                // output to file current subset
+                file << "Iteration " << iteration << ", current subset of nodes:";
+                list<int>::const_iterator it=subset.begin();
+                while(it != subset.end()){
+                    file << " " << (*it);
+                    it++;
+                }file << endl << "--------------------" << endl << endl;
             }
 
-            // print resulting subset
-            list<int>::const_iterator it=subset.begin();
-            while(it != subset.end()){
-                cout << (*it) << endl;
-                it++;
-            }cout << endl;
+                    
 
-            cout << "Difusion ended, check output-IC file to see benchmarks and the result" << endl;
+            // stop elapsed timer
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+            file << "Difusion completed in " << iteration << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
+            file.close();
+
+            cout << "Difusion ended, check output-IC-difusion file to see benchmarks and the result" << endl;
         }
 
         double computeNodeInfluence(int src){
