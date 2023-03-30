@@ -4,7 +4,7 @@ COMPILER: g++
 
 FLAGS: -std=c++11 -Wall -Wextra
 
-SRCS: program.cc IC_difussionGraph.hh DijkstraTest.hh
+SRCS: program.cc IC_difussionGraph.hh Greedy.hh
 
 OBJS: $(SRCS:.cc=.o)
 
