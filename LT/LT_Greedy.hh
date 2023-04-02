@@ -1,10 +1,11 @@
 #include "LT_difussionGraph.hh"
 #include <cmath>
 #include <list>
+#include <queue>
 #include <fstream>
 
 
-typedef pair<int,int> ppair;
+typedef pair<double,int> ppair;
 
 
 class Greedy: private LT_difussionGraph {
@@ -14,8 +15,10 @@ class Greedy: private LT_difussionGraph {
         // constructor and parametrized constructor ------------------------
         Greedy(){}
 
-        Greedy(int n){
-            this-> n = n;
+        Greedy(int n, int r){
+            this -> n = n;
+            this -> r = r;
+            spreaded = 0;
             g.resize(n);
             spreadedNodes.resize(n, false);
         }
@@ -116,8 +119,8 @@ class Greedy: private LT_difussionGraph {
 
         double computeNodeInfluence(int src){
             // Priority queue for vertices that are being processed
-            queue <int> Q;
-            Q.push(src);
+            priority_queue < ppair, vector<ppair>, greater<ppair> > Q;
+            Q.push(pair(0,src));
 
             // Vector for disntances
             vector <int> distances(this->n, 0);
@@ -125,21 +128,23 @@ class Greedy: private LT_difussionGraph {
 
             // Vector for visited nodes
             vector <bool> visited(n, false);
-            visited[src] = true;
 
             while(not Q.empty()){
                 // next node
-                int u = Q.front();
+                int u = Q.top().second;
                 Q.pop();
-                // visit all neightbours
-                for(int i = 0; i < g[u].size(); i++){
-                    // next neightbour
-                    int v = g[u][i];
-                    // if not visited, mark as visited and enqueue
-                    if(not visited[v]){
-                        distances[v] = distances[u] + 1/g[u].size();
-                        visited[v] = true;
-                        Q.push(v);
+                if (not visited[u]) {
+                    visited[u] = true;
+                    // visit all neightbours
+                    for(int i = 0; i < g[u].size(); i++){
+                        // next neightbour
+                        int v = g[u][i];
+                        // modify distance if necesssary
+                        if(distances[v] < distances[u]+distances[u]*1/g[v].size()){
+                            distances[v] = distances[u] + distances[u]*1/g[v].size();
+                            visited[v] = true;
+                            Q.push(pair(-distances[v], v));
+                        }
                     }
                 }
             }

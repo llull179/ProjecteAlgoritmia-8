@@ -18,6 +18,8 @@ class LT_difussionGraph {
         vector<vector<int>> g;
         // visited nodes
         vector <bool> spreadedNodes;
+        // ratio needed to influence a node
+        double r;
         // number of already spreaded nodes
         int spreaded;
         
@@ -26,8 +28,9 @@ class LT_difussionGraph {
         // degault and parametrized constructor
         LT_difussionGraph(){}
 
-        LT_difussionGraph(int n){
+        LT_difussionGraph(int n, int r){
             this -> n = n;
+            this -> r = r;
             spreaded = 0;
             g.resize(n);
             cout << g.size() << endl;
@@ -84,12 +87,12 @@ class LT_difussionGraph {
                 for(int i = 0; i < n; i++){
                     if(not newSpreadedNodes[i]){
                         // tries propagation
-                        int count = 0;
-                        int s = g[i].size();
-                        for (int j = 0; j < s and 2*count < s; ++j) {
+                        double count = 0;
+                        double s = g[i].size();
+                        for (int j = 0; j < s and count < s*r; ++j) {
                             if (spreadedNodes[g[i][j]]) ++count;
                         }
-                        if (2*count >= s) {newSpreadedNodes[i] = true; ++numPropagatedNodes;}
+                        if (count >= s*r) {newSpreadedNodes[i] = true; ++numPropagatedNodes;}
                     }
                 }
             }
