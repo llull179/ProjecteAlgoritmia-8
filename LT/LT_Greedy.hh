@@ -77,7 +77,8 @@ class LTGreedy: private LT_difussionGraph {
             }
 
             int iteration = 0;
-
+            list<int> newSubset = subset;
+            int newPropagatedNodes = propagatedNodes;
             while(propagatedNodes != this->n){
 
                 int idx = Q.top().second;
@@ -85,10 +86,13 @@ class LTGreedy: private LT_difussionGraph {
                 // add node to subset
                 inSubset[idx] = true;
                 subset.push_back(idx);
-                readStartingSubset(subset);
-                int newPropagatedNodes = propagate();
+                list<int> l;
+                l.push_back(idx);
+                modStartingSubset(l);
+                newPropagatedNodes = propagate(); 
                 if (newPropagatedNodes == propagatedNodes) {
                     subset.pop_back();
+                    //newSubset.pop_back();
                 }
                 else propagatedNodes = newPropagatedNodes;
                 iteration++;

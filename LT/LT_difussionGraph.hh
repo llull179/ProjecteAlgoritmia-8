@@ -51,23 +51,23 @@ class LT_difussionGraph {
         }
 
         // read starting subset of nodes
-        void readStartingSubset(const list<int>& l){
+        void modStartingSubset(const list<int>& l){
             // if list is empty asks user for nodes
-            spreaded = 0;
             if(l.size() ==0){
                 // subset of nodes
                 int x;
                 while(cin >> x and x!=-1){
-                    spreadedNodes[x] = true;
-                    spreaded++;
+                    if (not spreadedNodes[x]) {
+                        spreadedNodes[x] = true;
+                        spreaded++;
+                    }
                 }   
             }
             // otherwise reads nodes from the linked list
             else{
-                spreaded += l.size();
                 list<int>::const_iterator it=l.begin();
                 while(it != l.end()){
-                    spreadedNodes[*it] = true;
+                    if (not spreadedNodes[*it]) { spreadedNodes[*it] = true; ++spreaded;}
                     it++;
                 }
             }   
@@ -76,11 +76,10 @@ class LT_difussionGraph {
         // propagation
         int propagate(){
             int steps = 0;
-            int numPropagatedNodes = spreaded;
             auto begin = std::chrono::high_resolution_clock::now();
             vector<bool> newSpreadedNodes = spreadedNodes;
             int newV = -1;
-            while(numPropagatedNodes < n and newV != 0){
+            while(spreaded < n and newV != 0){
                 newV = 0;
                 spreadedNodes = newSpreadedNodes;
                 steps++;
@@ -95,13 +94,10 @@ class LT_difussionGraph {
                         if (count >= s*this->r) {newSpreadedNodes[i] = true; ++newV;}
                     }
                 }
-                numPropagatedNodes += newV;
+                spreaded += newV;
             }
-            // empty used data structures
-            spreaded = 0;
-            spreadedNodes = vector<bool>(n, false);
 
-            return numPropagatedNodes;
+            return spreaded;
         }
 
         // print graph
