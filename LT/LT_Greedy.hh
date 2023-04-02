@@ -8,14 +8,14 @@
 typedef pair<double,int> ppair;
 
 
-class Greedy: private LT_difussionGraph {
+class LTGreedy: private LT_difussionGraph {
 
     public:
 
         // constructor and parametrized constructor ------------------------
-        Greedy(){}
+        LTGreedy(){}
 
-        Greedy(int n, int r){
+        LTGreedy(int n, int r){
             this -> n = n;
             this -> r = r;
             spreaded = 0;
@@ -37,9 +37,9 @@ class Greedy: private LT_difussionGraph {
             }
         }
 
-        void readEdgesFromFile(string filename) {
-            this-> m = 0;     
-
+        void readEdgesFromFile(double r, string filename) {
+            this -> m = 0;     
+            this -> r = r;
             // read graph from file
             ifstream file(filename);
 
@@ -83,6 +83,7 @@ class Greedy: private LT_difussionGraph {
                     // pick node not propagated yet
                     if( not inSubset[i]) {
                         double nodeInfluence = computeNodeInfluence(i);
+                        cout << "Node " << i << " influència: " << nodeInfluence << endl;
                         if (nodeInfluence > maxInfluence) {
                             maxInfluence = nodeInfluence;
                             idx = i;
@@ -123,8 +124,8 @@ class Greedy: private LT_difussionGraph {
             Q.push(pair(0,src));
 
             // Vector for disntances
-            vector <int> distances(this->n, 0);
-            distances[src] = 0;
+            vector <double> distances(this->n, 0);
+            distances[src] = 1;
 
             // Vector for visited nodes
             vector <bool> visited(n, false);
@@ -140,8 +141,9 @@ class Greedy: private LT_difussionGraph {
                         // next neightbour
                         int v = g[u][i];
                         // modify distance if necesssary
-                        if(distances[v] < distances[u]+distances[u]*1/g[v].size()){
-                            distances[v] = distances[u] + distances[u]*1/g[v].size();
+                        double s = g[v].size();
+                        if(distances[v] < distances[u]+distances[u]*1/s){
+                            distances[v] = distances[u] + distances[u]*1/s;
                             visited[v] = true;
                             Q.push(pair(-distances[v], v));
                         }
