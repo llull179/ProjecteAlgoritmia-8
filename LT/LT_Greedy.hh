@@ -120,7 +120,7 @@ class Greedy: private LT_difussionGraph {
             Q.push(src);
 
             // Vector for disntances
-            vector <int> distances(this->n, __INT_MAX__);
+            vector <int> distances(this->n, 0);
             distances[src] = 0;
 
             // Vector for visited nodes
@@ -137,7 +137,7 @@ class Greedy: private LT_difussionGraph {
                     int v = g[u][i];
                     // if not visited, mark as visited and enqueue
                     if(not visited[v]){
-                        distances[v] = distances[u] + 1;
+                        distances[v] = distances[u] + 1/g[u].size();
                         visited[v] = true;
                         Q.push(v);
                     }
@@ -146,7 +146,7 @@ class Greedy: private LT_difussionGraph {
             // compute global influence as the sum of all influences
             double globalInfluence = 0.0;
             for(int i = 0; i < n; i++){
-                globalInfluence += pow(this->p,distances[i]);
+                globalInfluence += distances[i];
             }
             return globalInfluence;
         }
