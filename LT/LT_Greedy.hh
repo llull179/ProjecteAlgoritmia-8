@@ -15,7 +15,7 @@ class LTGreedy: private LT_difussionGraph {
         // constructor and parametrized constructor ------------------------
         LTGreedy(){}
 
-        LTGreedy(int n, int r){
+        LTGreedy(int n, double r){
             this -> n = n;
             this -> r = r;
             spreaded = 0;
@@ -70,32 +70,27 @@ class LTGreedy: private LT_difussionGraph {
 
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();
-
+            priority_queue < ppair, vector<ppair>, less<ppair> > Q;
+            for (int i = 0; i < this -> n; ++i) {
+                int p = computeNodeInfluence(i);
+                Q.push(pair(p,i));
+            }
 
             int iteration = 0;
 
             while(propagatedNodes != this->n){
 
-                // pick wich node to propagate
-                double maxInfluence = 0.0;
-                int idx = 0;
-                for(int i = 0; i < this->n; i++){
-                    // pick node not propagated yet
-                    if( not inSubset[i]) {
-                        double nodeInfluence = computeNodeInfluence(i);
-                        cout << "Node " << i << " influència: " << nodeInfluence << endl;
-                        if (nodeInfluence > maxInfluence) {
-                            maxInfluence = nodeInfluence;
-                            idx = i;
-                        }
-                    }
-                }
+                int idx = Q.top().second;
+                Q.pop();
                 // add node to subset
                 inSubset[idx] = true;
                 subset.push_back(idx);
                 readStartingSubset(subset);
-                propagatedNodes = propagate();
-
+                int newPropagatedNodes = propagate();
+                if (newPropagatedNodes == propagatedNodes) {
+                    subset.pop_back();
+                }
+                else propagatedNodes = newPropagatedNodes;
                 iteration++;
 
                 // output to file current subset

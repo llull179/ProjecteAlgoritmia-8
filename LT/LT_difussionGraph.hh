@@ -28,7 +28,7 @@ class LT_difussionGraph {
         // degault and parametrized constructor
         LT_difussionGraph(){}
 
-        LT_difussionGraph(int n, int r){
+        LT_difussionGraph(int n, double r){
             this -> n = n;
             this -> r = r;
             spreaded = 0;
@@ -56,8 +56,6 @@ class LT_difussionGraph {
             spreaded = 0;
             if(l.size() ==0){
                 // subset of nodes
-                cout << "Introduce initial subset of nodes: "  << endl;
-                cout << "(end subset with a -1)" << endl;
                 int x;
                 while(cin >> x and x!=-1){
                     spreadedNodes[x] = true;
@@ -77,38 +75,28 @@ class LT_difussionGraph {
 
         // propagation
         int propagate(){
-            cout << "Initially spreaded nodes:";
-            for (int i = 0; i < spreadedNodes.size(); ++i) {
-                if (spreadedNodes[i]) cout << " " << i;
-            }
-            cout << "Propagation ratio is " << this->r << endl;
-            cout << endl;
             int steps = 0;
             int numPropagatedNodes = spreaded;
             auto begin = std::chrono::high_resolution_clock::now();
-            vector<bool> newSpreadedNodes;
+            vector<bool> newSpreadedNodes = spreadedNodes;
             int newV = -1;
             while(numPropagatedNodes < n and newV != 0){
                 newV = 0;
-                newSpreadedNodes = spreadedNodes;
+                spreadedNodes = newSpreadedNodes;
                 steps++;
                 for(int i = 0; i < n; i++){
-                    if(not newSpreadedNodes[i]){
+                    if(not spreadedNodes[i]){
                         // tries propagation
                         double count = 0;
                         double s = g[i].size();
                         for (int j = 0; j < s; ++j) {
-                            cout << g[i][j] << " adjacent a " << i << endl;
                             if (spreadedNodes[g[i][j]]) ++count;
                         }
-                        cout << "node " << i << " influenciat per " << count << " nodes de " << s << " possibles" << endl;
-                        cout << s*this->r << endl;
-                        if (count >= s*this->r) {newSpreadedNodes[i] = true; cout << i << " ara actiu" << endl; ++newV;}
+                        if (count >= s*this->r) {newSpreadedNodes[i] = true; ++newV;}
                     }
                 }
                 numPropagatedNodes += newV;
             }
-            cout << "Final: " << numPropagatedNodes << " nodes expanded in " << steps << " steps";
             // empty used data structures
             spreaded = 0;
             spreadedNodes = vector<bool>(n, false);

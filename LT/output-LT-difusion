@@ -1,4 +1,13 @@
-Iteration 1, current subset of nodes: 0
+Iteration 1, current subset of nodes: 3
 --------------------
 
-Difusion completed in 1 steps, 0.000635144s.
+Iteration 2, current subset of nodes: 3
+--------------------
+
+Iteration 3, current subset of nodes: 3
+--------------------
+
+Iteration 4, current subset of nodes: 3 1
+--------------------
+
+Difusion completed in 4 steps, 0.000248945s.
