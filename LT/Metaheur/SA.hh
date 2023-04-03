@@ -80,7 +80,7 @@ class SA: private LT_difussionGraph {
                     aux = sol;
                     r = rand()%g.size();
                     //forma part de S (veiem si el podem treure)
-                    if (ini[r]) {
+                    if (sol[r]) {
                         aux[r] = false;
                         if(es_solucio(aux)) sol[r] = false;
                         else --i; //no volem comptar les iteracions que surten de l'espai de solucions
