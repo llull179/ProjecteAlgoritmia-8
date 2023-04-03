@@ -73,6 +73,10 @@ class LT_difussionGraph {
             }   
         }
 
+        bool inStartingSubset (int i) {
+            return spreadedNodes[i];
+        }
+
         // propagation
         int propagate(){
             int steps = 0;

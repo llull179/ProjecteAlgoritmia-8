@@ -84,30 +84,29 @@ class LTGreedy: private LT_difussionGraph {
                 int idx = Q.top().second;
                 Q.pop();
                 // add node to subset
-                inSubset[idx] = true;
-                subset.push_back(idx);
-                list<int> l;
-                l.push_back(idx);
-                modStartingSubset(l);
-                newPropagatedNodes = propagate(); 
-                if (newPropagatedNodes == propagatedNodes) {
-                    subset.pop_back();
-                    //newSubset.pop_back();
+                if (not inStartingSubset(idx)) {
+                    inSubset[idx] = true;
+                    subset.push_back(idx);
+                    list<int> l;
+                    l.push_back(idx);
+                    modStartingSubset(l);
+                    newPropagatedNodes = propagate(); 
+                    if (newPropagatedNodes == propagatedNodes) {
+                        subset.pop_back();
+                        //newSubset.pop_back();
+                    }
+                    else propagatedNodes = newPropagatedNodes;
+                    iteration++;
+
+                    // output to file current subset
+                    file << "Iteration " << iteration << ", current subset of nodes:";
+                    list<int>::const_iterator it=subset.begin();
+                    while(it != subset.end()){
+                        file << " " << (*it);
+                        it++;
+                    }file << endl << "--------------------" << endl << endl;
                 }
-                else propagatedNodes = newPropagatedNodes;
-                iteration++;
-
-                // output to file current subset
-                file << "Iteration " << iteration << ", current subset of nodes:";
-                list<int>::const_iterator it=subset.begin();
-                while(it != subset.end()){
-                    file << " " << (*it);
-                    it++;
-                }file << endl << "--------------------" << endl << endl;
-            }
-
-                    
-
+            }                
             // stop elapsed timer
             auto end = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
