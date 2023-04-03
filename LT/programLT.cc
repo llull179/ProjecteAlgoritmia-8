@@ -20,7 +20,7 @@ int main(int argc, char * argv[]){
 
 
         // begin difusion
-        g.beginDifusion(); 
+        g.beginDifusionLTInit(); 
     }
     // graph input from file
     else if (argc == 2){
@@ -32,7 +32,7 @@ int main(int argc, char * argv[]){
         g.readEdgesFromFile(r, INPUT_PATH + filename);
 
         // begin difusion
-        g.beginDifusion(); 
+        g.beginDifusionLTInit(); 
     }
     else{
         cerr << "Invalid number of arguments." << endl;

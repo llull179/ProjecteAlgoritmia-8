@@ -72,7 +72,7 @@ class LTGreedy: private LT_difussionGraph {
             auto begin = std::chrono::high_resolution_clock::now();
             priority_queue < ppair, vector<ppair>, less<ppair> > Q;
             for (int i = 0; i < this -> n; ++i) {
-                int p = computeNodeInfluence(i,inSubset);
+                int p = computeNodeInfluence(i);
                 Q.push(make_pair(p,i));
             }
 
@@ -89,22 +89,23 @@ class LTGreedy: private LT_difussionGraph {
                     subset.push_back(idx);
                     list<int> l;
                     l.push_back(idx);
-                    modStartingSubset(l);
-                    newPropagatedNodes = propagate(); 
-                    if (newPropagatedNodes == propagatedNodes) {
-                        subset.pop_back();
-                        //newSubset.pop_back();
-                    }
-                    else propagatedNodes = newPropagatedNodes;
-                    iteration++;
+                    if (modStartingSubset(l) > 0) {
+                        newPropagatedNodes = propagate(); 
+                        if (newPropagatedNodes == propagatedNodes) {
+                            subset.pop_back();
+                        }
+                        else propagatedNodes = newPropagatedNodes;
+                        iteration++;
 
-                    // output to file current subset
-                    file << "Iteration " << iteration << ", current subset of nodes:";
-                    list<int>::const_iterator it=subset.begin();
-                    while(it != subset.end()){
-                        file << " " << (*it);
-                        it++;
-                    }file << endl << "--------------------" << endl << endl;
+                        // output to file current subset
+                        file << "Iteration " << iteration << ", current subset of nodes:";
+                        list<int>::const_iterator it=subset.begin();
+                        while(it != subset.end()){
+                            file << " " << (*it);
+                            it++;
+                        }file << endl << "--------------------" << endl << endl;
+                    }
+                    else subset.pop_back();
                 }
             }                
             // stop elapsed timer
@@ -137,7 +138,9 @@ class LTGreedy: private LT_difussionGraph {
                 int max = 0;
                 int idx = -1;
                 for (int i = 0; i < this -> n; ++i) {
-                    int p = computeNodeInfluence(i,inSubset);
+                    int p;
+                    if (inSubset[i]) p = 0;
+                    else p = computeNodeInfluence(i);
                     if (p > max) {
                         max = p;
                         idx = i;
@@ -149,22 +152,23 @@ class LTGreedy: private LT_difussionGraph {
                     subset.push_back(idx);
                     list<int> l;
                     l.push_back(idx);
-                    modStartingSubset(l);
-                    newPropagatedNodes = propagate(); 
-                    if (newPropagatedNodes == propagatedNodes) {
-                        subset.pop_back();
-                        //newSubset.pop_back();
-                    }
-                    else propagatedNodes = newPropagatedNodes;
-                    iteration++;
+                    if (modStartingSubset(l) > 0) {
+                        newPropagatedNodes = propagate(); 
+                        if (newPropagatedNodes == propagatedNodes) {
+                            subset.pop_back();
+                        }
+                        else propagatedNodes = newPropagatedNodes;
+                        iteration++;
 
-                    // output to file current subset
-                    file << "Iteration " << iteration << ", current subset of nodes:";
-                    list<int>::const_iterator it=subset.begin();
-                    while(it != subset.end()){
-                        file << " " << (*it);
-                        it++;
-                    }file << endl << "--------------------" << endl << endl;
+                        // output to file current subset
+                        file << "Iteration " << iteration << ", current subset of nodes:";
+                        list<int>::const_iterator it=subset.begin();
+                        while(it != subset.end()){
+                            file << " " << (*it);
+                            it++;
+                        }file << endl << "--------------------" << endl << endl;
+                    }
+                    else subset.pop_back();
                 }
             }                
             // stop elapsed timer
@@ -176,7 +180,7 @@ class LTGreedy: private LT_difussionGraph {
             cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
         }
 
-        double computeNodeInfluence(int src, vector<bool> &S){
+        double computeNodeInfluence(int src){
             // Priority queue for vertices that are being processed
             priority_queue < ppair, vector<ppair>, greater<ppair> > Q;
             Q.push(make_pair(0,src));
@@ -200,7 +204,7 @@ class LTGreedy: private LT_difussionGraph {
                         int v = g[u][i];
                         // modify distance if necesssary
                         double s = g[v].size();
-                        if(not S[v] and distances[v] < distances[u]+distances[u]*1/s){
+                        if(distances[v] < distances[u]+distances[u]*1/s){
                             distances[v] = distances[u] + distances[u]*1/s;
                             visited[v] = true;
                             Q.push(make_pair(-distances[v], v));

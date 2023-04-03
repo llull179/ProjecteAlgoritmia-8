@@ -51,15 +51,16 @@ class LT_difussionGraph {
         }
 
         // read starting subset of nodes
-        void modStartingSubset(const list<int>& l){
+        int modStartingSubset(const list<int>& l){
             // if list is empty asks user for nodes
+            int added = 0;
             if(l.size() ==0){
                 // subset of nodes
                 int x;
                 while(cin >> x and x!=-1){
                     if (not spreadedNodes[x]) {
                         spreadedNodes[x] = true;
-                        spreaded++;
+                        added++;
                     }
                 }   
             }
@@ -67,10 +68,12 @@ class LT_difussionGraph {
             else{
                 list<int>::const_iterator it=l.begin();
                 while(it != l.end()){
-                    if (not spreadedNodes[*it]) { spreadedNodes[*it] = true; ++spreaded;}
+                    if (not spreadedNodes[*it]) { spreadedNodes[*it] = true; ++added;}
                     it++;
                 }
-            }   
+            }
+            spreaded += added;
+            return added;   
         }
 
         bool inStartingSubset (int i) {
