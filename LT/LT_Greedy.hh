@@ -73,7 +73,7 @@ class LTGreedy: private LT_difussionGraph {
             priority_queue < ppair, vector<ppair>, less<ppair> > Q;
             for (int i = 0; i < this -> n; ++i) {
                 int p = computeNodeInfluence(i,inSubset);
-                Q.push(pair(p,i));
+                Q.push(make_pair(p,i));
             }
 
             int iteration = 0;
@@ -179,7 +179,7 @@ class LTGreedy: private LT_difussionGraph {
         double computeNodeInfluence(int src, vector<bool> &S){
             // Priority queue for vertices that are being processed
             priority_queue < ppair, vector<ppair>, greater<ppair> > Q;
-            Q.push(pair(0,src));
+            Q.push(make_pair(0,src));
 
             // Vector for disntances
             vector <double> distances(this->n, 0);
@@ -203,7 +203,7 @@ class LTGreedy: private LT_difussionGraph {
                         if(not S[v] and distances[v] < distances[u]+distances[u]*1/s){
                             distances[v] = distances[u] + distances[u]*1/s;
                             visited[v] = true;
-                            Q.push(pair(-distances[v], v));
+                            Q.push(make_pair(-distances[v], v));
                         }
                     }
                 }
