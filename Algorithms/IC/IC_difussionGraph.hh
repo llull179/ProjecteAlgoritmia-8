@@ -146,4 +146,61 @@ class IC_difussionGraph {
             }
             cout << endl;
         }
+
+        vector<int> getMinDominantSet() {
+            vector<bool> uncovered(n, true);
+            queue<int> q;
+            vector<int> scores;
+
+            //Initialize scores in function of how nodes could influence one node
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < g[i].size(); j++) {
+                    if (g[i][j] != i) {
+                        scores[i]++;
+                    }
+                }
+            }
+
+            // Minimum dominant set
+            bool mdsFind = false;
+            while(!mdsFind) {
+                int maxScore = -1;
+                int maxNode = -1;
+                
+                for(int i = 0; i<n;++i) {
+                    if (uncovered[i] && scores[i] > maxScore) {
+                    maxScore = scores[i];
+                    maxNode = i;
+                    }
+                }
+
+                if(maxNode != -1) {
+                    q.push(maxNode);
+                    uncovered[maxNode] = false;
+                    for ( int i = 0; i < g[maxNode].size(); i++)
+                    {
+                       int neighbor = g[maxNode][i];
+                       if(neighbor != maxNode && uncovered[neighbor]) {
+                            uncovered[neighbor] = false;
+                            for(int j = 0; j < g[neighbor][j]; ++j) {
+                                if(g[neighbor][j] != neighbor) {
+                                    scores[g[neighbor][j]]--;
+                                }
+                            }
+                       }
+                       
+                    }
+                    
+                }else {
+                    mdsFind = true;
+                }
+
+            }
+            vector<int> result;
+            while(!q.empty()) {
+                result.push_back(q.front());
+                q.pop();
+            }
+            return result;
+        }
 };
