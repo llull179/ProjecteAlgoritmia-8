@@ -97,7 +97,7 @@ class SA: private LT_difussionGraph {
             return sol;
         }
 
-        vector<int> getMinDominantSet() {
+        vector<bool> getMinDominantSet() {
             vector<bool> uncovered(n, true);
             queue<int> q;
             vector<int> scores;
@@ -146,9 +146,9 @@ class SA: private LT_difussionGraph {
                 }
 
             }
-            vector<int> result;
+            vector<int> result(n,false);
             while(!q.empty()) {
-                result.push_back(q.front());
+                result[q.front()] = true;
                 q.pop();
             }
             return result;

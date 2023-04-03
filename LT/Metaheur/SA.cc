@@ -18,9 +18,7 @@ int main(int argc, char * argv[]){
         SA G = SA(n,r);
         cout << "Introduce edges in the folllowing format : i j " << endl;
         G.readEdges(m);
-        vector<int> llistat = G.getMinDominantSet();
-        //passar llistat de nodes a vector de booleans
-        vector<bool> sol_ini = G.form(llistat);
+        vector<bool> sol_ini = G.getMinDominantSet();
         //definim la temperatura
         int temp = 100;
         vector<bool> sol_fin = G.simulated_annealing(sol_ini,temp);

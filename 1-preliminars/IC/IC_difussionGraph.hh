@@ -119,7 +119,7 @@ class IC_difussionGraph {
             cout << endl;
         }
 
-        vector<int> getMinDominantSet() {
+        vector<bool> getMinDominantSet() {
             vector<bool> uncovered(n, true);
             queue<int> q;
             vector<int> scores;
@@ -168,9 +168,9 @@ class IC_difussionGraph {
                 }
 
             }
-            vector<int> result;
+            vector<int> result(n,false);
             while(!q.empty()) {
-                result.push_back(q.front());
+                result[q.front()] = true;
                 q.pop();
             }
             return result;
