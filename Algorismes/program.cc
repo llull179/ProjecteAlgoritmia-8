@@ -38,7 +38,7 @@ int main(int argc, char * argv[]){
         g.readEdges(m, pr);
 
         // begin difusion
-        if(dmode == "IC")  g.beginDifusion_IC(); 
+        if(dmode == "IC")  g.beginDifusion_IC_v3(); 
         else ;
 
     }
@@ -46,7 +46,7 @@ int main(int argc, char * argv[]){
     // graph input from file
     else if (argc == 2){
         string filename = argv[1];
-        LocalSearch g = LocalSearch();
+        Greedy g = Greedy();
         double pr;
 
         if(dmode == "IC") cout << "Introduce Spreading probability: ";
@@ -54,9 +54,9 @@ int main(int argc, char * argv[]){
         cin >> pr; cout << endl;
 
         g.readEdgesFromFile(pr, INPUT_PATH + filename);
-   
-        // begin difusions 
-        if(dmode == "IC")  g.beginDifusion(true,1); 
+
+        // begin difusion
+        if(dmode == "IC")  g.beginDifusion_IC_v3(); 
         else ;   
     }
     else{
