@@ -1,3 +1,5 @@
+#ifndef LOCALSEARCH_HH
+#define LOCALSEARCH_HH
 #include <iostream>
 #include <vector>
 #include "difussionGraph.hh"
@@ -20,11 +22,18 @@ class LocalSearch: public difussionGraph{
 
     }
 
-    vector<bool> beginDifusion(bool modeIC) {
+    void beginDifusion(bool modeIC) {
+        // Prints is redirected to a file
+            ofstream file;
+            file.open("output-IC-difusion");   
+
+        // sets timer
+        auto begin = std::chrono::high_resolution_clock::now();
+        int iteration = 0;
         vector<bool> sol;
         if(modeIC) sol = getRandomNodes();
         else if(!modeIC) sol = getMinDominantSet();
-        else //sol = //beginGreedy;
+        else /*/sol = //beginGreedy/*/;
         
         vector<double> influence(n,0);
 
@@ -63,9 +72,23 @@ class LocalSearch: public difussionGraph{
                     sol[minNod] = true;
                 }
                 ++it;
+                // output to file actual subset of nodes
+                file << "Iteration " << iteration << ", current subset of nodes:";
+                for(int i = 0; i < this->n; i++){
+                    if(sol[i]) file << " " << i;
+                } 
+                file << endl << "--------------------" << endl << endl;
             }
             if(findSolution == false) converge = true;
+
         }
-        return sol;
-    }
+        /// stop elapsed timer
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+            file << "Difusion completed in " << iteration << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
+            file.close();
+
+            cout << "Difusion ended, check output-IC-difusion file to see benchmarks and the result" << endl;
+        }
 };
+#endif

@@ -1,5 +1,6 @@
+#ifndef GREEDY_HH
+#define GREEDY_HH
 #include "difussionGraph.hh"
-#include <cmath>
 #include <list>
 #include <fstream>
 using namespace std;
@@ -85,3 +86,4 @@ class Greedy: public difussionGraph{
         
 
 };
+#endif

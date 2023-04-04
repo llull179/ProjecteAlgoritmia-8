@@ -1,9 +1,12 @@
+#ifndef DIFUSSIONGRAPH_HH
+#define DIFUSSIONGRAPH_HH
 #include <vector> 
 #include <iostream>
 #include <queue>
 #include <chrono>
 #include <fstream>
 #include <list>
+#include <cmath>
 
 
 using namespace std;
@@ -238,3 +241,4 @@ class difussionGraph {
             return globalInfluence;
         }
 };
+#endif
