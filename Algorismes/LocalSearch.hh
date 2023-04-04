@@ -9,34 +9,40 @@ using namespace std;
 
 class LocalSearch: public difussionGraph{
     private:
-    struct myPair {
-        int first;
-        int second;
+        struct myPair {
+            int first;
+            int second;
 
-        bool operator<(const myPair& other) const {
-            return second < other.second;
-        }
-    };
+            bool operator<(const myPair& other) const {
+                return second < other.second;
+            }
+        };
+
     public:
-    LocalSearch() {
+    LocalSearch(){}
 
+    LocalSearch(int n){
+        this-> n = n;
+        g.resize(n);
+        spreadedNodes.resize(n, false);
     }
 
-    void beginDifusion(bool modeIC) {
+    void beginDifusion(bool modeIC, int mode) {
         // Prints is redirected to a file
-            ofstream file;
-            file.open("output-IC-difusion");   
+        ofstream file;
+        file.open("output-IC-difusion");   
 
         // sets timer
         auto begin = std::chrono::high_resolution_clock::now();
         int iteration = 0;
         vector<bool> sol;
-        if(modeIC) sol = getRandomNodes();
-        else if(!modeIC) sol = getMinDominantSet();
+        if(mode == 0) sol = getRandomNodes();
+        else if(mode == 1) {
+            sol = this->getMinDominantSet();
+        }
         else /*/sol = //beginGreedy/*/;
-        
-        vector<double> influence(n,0);
 
+        vector<double> influence(n,0);
         for(int i = 0; i< n; i++) {
             influence[i] = computeNodeInfluence_IC(i);
         }
@@ -72,6 +78,7 @@ class LocalSearch: public difussionGraph{
                     sol[minNod] = true;
                 }
                 ++it;
+                ++iteration;
                 // output to file actual subset of nodes
                 file << "Iteration " << iteration << ", current subset of nodes:";
                 for(int i = 0; i < this->n; i++){
