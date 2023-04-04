@@ -1,11 +1,11 @@
 #include <iostream>
 #include <vector>
-#include "IC_difussionGraph.hh"
+#include "difussionGraph.hh"
 #include <queue>
 
 using namespace std;
 
-class LocalSearch: private IC_difussionGraph{
+class LocalSearch: public difussionGraph{
     private:
     struct myPair {
         int first;
@@ -20,9 +20,17 @@ class LocalSearch: private IC_difussionGraph{
 
     }
 
-    vector<int> beginDifusion() {
-        vector<int> sol = this->getDominantSet();
-        vector<int> influence;
+    vector<bool> beginDifusion(bool modeIC) {
+        vector<bool> sol;
+        if(modeIC) sol = getRandomNodes();
+        else if(!modeIC) sol = getMinDominantSet();
+        else //sol = //beginGreedy;
+        
+        vector<double> influence(n,0);
+
+        for(int i = 0; i< n; i++) {
+            influence[i] = computeNodeInfluence_IC(i);
+        }
         vector<int> meanInfluence;
         bool converge = false;
         
@@ -31,9 +39,9 @@ class LocalSearch: private IC_difussionGraph{
             priority_queue<myPair> meanInfluence;
             myPair pair;
             for(auto i: sol) {
-                int sum = 0;
-                int count = 0;
-                for(auto j: g[sol]) {
+                double sum = 0;
+                double count = 0;
+                for(auto j: g[i]) {
                     ++count;
                     sum += influence[j];
                 }
@@ -41,14 +49,14 @@ class LocalSearch: private IC_difussionGraph{
                 pair.second = sum/count;
                 meanInfluence.push(pair) ;
             }
-            int minInfl = meanInfluence.front().second;
-            int minNod = meanInfluence.front().first;;
+            int minInfl = meanInfluence.top().second;
+            int minNod = meanInfluence.top().first;;
 
             bool findSolution = false;
             int it = 0;
             while(it < meanInfluence.size() && !findSolution) {
                 sol[minNod] = false;
-                if(isSol(sol)) {
+                if(isSolution(sol,true)) {
                     findSolution = true;
                 }
                 else {
@@ -58,5 +66,6 @@ class LocalSearch: private IC_difussionGraph{
             }
             if(findSolution == false) converge = true;
         }
+        return sol;
     }
 };

@@ -2,10 +2,10 @@
 #include <cmath>
 #include <list>
 #include <fstream>
+using namespace std;
 
 
 typedef pair<int,int> ppair;
-
 
 class Greedy: public difussionGraph{
 
@@ -21,7 +21,7 @@ class Greedy: public difussionGraph{
         }
 
         // public methods --------------------------------------------------
-
+            
         // methods for LT --------------------------------------------------
 
 
@@ -60,7 +60,7 @@ class Greedy: public difussionGraph{
                 // add node to subset
                 this->spreadedNodes[idx] = true;
                 this->enqueueStartingSet();
-                propagatedNodes = propagate();
+                propagatedNodes = propagateIC();
 
 
                 // output to file actual subset of nodes
@@ -81,42 +81,7 @@ class Greedy: public difussionGraph{
 
             cout << "Difusion ended, check output-IC-difusion file to see benchmarks and the result" << endl;
         }
-
-        double computeNodeInfluence_IC(int src){
-            // Priority queue for vertices that are being processed
-            queue <int> Q;
-            Q.push(src);
-
-            // Vector for disntances
-            vector <int> distances(this->n, __INT_MAX__);
-            distances[src] = 0;
-
-            // Vector for visited nodes
-            vector <bool> visited(n, false);
-            visited[src] = true;
-
-            while(not Q.empty()){
-                // next node
-                int u = Q.front();
-                Q.pop();
-                // visit all neightbours
-                for(int i = 0; i < g[u].size(); i++){
-                    // next neightbour
-                    int v = g[u][i];
-                    // if not visited, mark as visited and enqueue
-                    if(not visited[v]){
-                        distances[v] = distances[u] + 1;
-                        visited[v] = true;
-                        Q.push(v);
-                    }
-                }
-            }
-            // compute global influence as the sum of all influences
-            double globalInfluence = 0.0;
-            for(int i = 0; i < n; i++){
-                globalInfluence += pow(this->p,distances[i]);
-            }
-            return globalInfluence;
-        }
+        
+        
 
 };
