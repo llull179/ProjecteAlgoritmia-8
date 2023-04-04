@@ -150,8 +150,7 @@ class difussionGraph {
         vector<bool> getMinDominantSet() {
             vector<bool> uncovered(n, true);
             queue<int> q;
-            vector<int> scores;
-
+            vector<int> scores(n,0);
             //Initialize scores in function of how nodes could influence one node
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < g[i].size(); j++) {
@@ -160,7 +159,6 @@ class difussionGraph {
                     }
                 }
             }
-
             // Minimum dominant set
             bool mdsFind = false;
             while(!mdsFind) {
@@ -173,7 +171,6 @@ class difussionGraph {
                     maxNode = i;
                     }
                 }
-
                 if(maxNode != -1) {
                     q.push(maxNode);
                     uncovered[maxNode] = false;
@@ -182,7 +179,7 @@ class difussionGraph {
                        int neighbor = g[maxNode][i];
                        if(neighbor != maxNode && uncovered[neighbor]) {
                             uncovered[neighbor] = false;
-                            for(int j = 0; j < g[neighbor][j]; ++j) {
+                            for(int j = 0; j < g[neighbor].size(); ++j) {
                                 if(g[neighbor][j] != neighbor) {
                                     scores[g[neighbor][j]]--;
                                 }

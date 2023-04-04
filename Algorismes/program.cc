@@ -54,8 +54,8 @@ int main(int argc, char * argv[]){
         cin >> pr; cout << endl;
 
         g.readEdgesFromFile(pr, INPUT_PATH + filename);
-
-        // begin difusion
+   
+        // begin difusions 
         if(dmode == "IC")  g.beginDifusion(true,1); 
         else ;   
     }
