@@ -27,7 +27,9 @@ class difussionGraph {
         double p;
 
     public:
-        // default and parametrized constructor
+        /***********************************************************************************************************
+        DEFAULT AND PARAMETRIZED CONSTRUCTOR
+        ***********************************************************************************************************/
         difussionGraph(){}
 
         difussionGraph(int n){
@@ -37,7 +39,11 @@ class difussionGraph {
             spreadedNodes.resize(n, false);
         }
 
-        // set edges
+        /***********************************************************************************************************
+        GENERIC PUBLIC METHODS
+        ***********************************************************************************************************/
+
+
         virtual void readEdges(int m, double p){
             this-> m = m;
 
@@ -74,6 +80,7 @@ class difussionGraph {
             file.close();
         }
 
+
         // read starting subset of nodes
         void enqueueStartingSet(){
             for(int i = 0; i < this->n; i++){
@@ -81,8 +88,98 @@ class difussionGraph {
             } 
         }
 
-        // propagation
-        int propagateIC(){
+        double computeNodeInfluence(int src){
+            // Priority queue for vertices that are being processed
+            queue <int> Q;
+            Q.push(src);
+
+            // Vector for disntances
+            vector <int> distances(this->n, __INT_MAX__);
+            distances[src] = 0;
+
+            // Vector for visited nodes
+            vector <bool> visited(n, false);
+            visited[src] = true;
+
+            while(not Q.empty()){
+                // next node
+                int u = Q.front();
+                Q.pop();
+                // visit all neightbours
+                for(int i = 0; i < g[u].size(); i++){
+                    // next neightbour
+                    int v = g[u][i];
+                    // if not visited, mark as visited and enqueue
+                    if(not visited[v]){
+                        distances[v] = distances[u] + 1;
+                        visited[v] = true;
+                        Q.push(v);
+                    }
+                }
+            }
+            // compute global influence as the sum of all influences
+            double globalInfluence = 0.0;
+            for(int i = 0; i < n; i++){
+                globalInfluence += pow(this->p,distances[i]);
+            }
+            return globalInfluence;
+        }
+
+        /***********************************************************************************************************
+        INDEPENDENT CASCADE GREEDY METHODS
+        ***********************************************************************************************************/
+        void readStartingSubset(const list<int>& l){
+            list<int>::const_iterator it=l.begin();
+            while(it != l.end()){
+                nodesToSpread.push(*it);
+                spreadedNodes[*it] = true;
+                it++;
+            }
+        }
+
+        /*
+        PROPAGATION FOR IC MODEL
+            - v1: Propagation without saving previous iterations
+            - v23: Optimized propagation, remembers past iterations
+        */
+        int propagateIC_v1(){
+
+            int steps = 0;
+            int numPropagatedNodes = nodesToSpread.size();
+            auto begin = std::chrono::high_resolution_clock::now();
+
+            while(not nodesToSpread.empty()){
+                
+                // get next element to propagate
+                int tmp = nodesToSpread.front();
+                steps++;
+                // check neightbours
+                for(int i = 0; i < g[tmp].size(); i++){
+                        
+                        if(not spreadedNodes[g[tmp][i]]){
+                            // tries propagation
+                            double shot_p = (rand()%100)/100.0;
+                            if(shot_p > (1-this-> p)){
+                                // propagates to new node
+                                numPropagatedNodes++;
+                                nodesToSpread.push(g[tmp][i]);
+                                spreadedNodes[g[tmp][i]] = true;
+                            }
+                        }
+                }
+                // node tmp does not try propagation again
+                nodesToSpread.pop();
+            }
+
+            // empty used data structures
+            queue<int>empty;
+            swap(this-> nodesToSpread, empty);
+            spreadedNodes = vector<bool>(n, false);
+
+            return numPropagatedNodes;
+        }
+
+        int propagateIC_v23(){
             int steps = 0;
             int numPropagatedNodes = nodesToSpread.size();
 
@@ -130,6 +227,10 @@ class difussionGraph {
             cout << endl;
         }
 
+        /***********************************************************************************************************
+        LOCAL SEARCH METHODS 
+        ***********************************************************************************************************/
+
         //Comprova si el conjunt de nodes 'sol' és una solució vàlida
         //Si checkIC es true comprova pel model de solució per IC, en cas contrari comprova la solució
         //pel model de difusió de LT
@@ -137,7 +238,7 @@ class difussionGraph {
             for(int i = 0; i < sol.size(); ++i) {
                 if(sol[i]) nodesToSpread.push(i);
             } 
-            if(checkIC && propagateIC() == n) return true;
+            if(checkIC && propagateIC_v23() == n) return true;
         // else if(!checkIC && propagateLT() == n) return true;
             else return false;
         
@@ -199,43 +300,6 @@ class difussionGraph {
                 q.pop();
             }
             return result;
-        }
-
-        double computeNodeInfluence_IC(int src){
-            // Priority queue for vertices that are being processed
-            queue <int> Q;
-            Q.push(src);
-
-            // Vector for disntances
-            vector <int> distances(this->n, __INT_MAX__);
-            distances[src] = 0;
-
-            // Vector for visited nodes
-            vector <bool> visited(n, false);
-            visited[src] = true;
-
-            while(not Q.empty()){
-                // next node
-                int u = Q.front();
-                Q.pop();
-                // visit all neightbours
-                for(int i = 0; i < g[u].size(); i++){
-                    // next neightbour
-                    int v = g[u][i];
-                    // if not visited, mark as visited and enqueue
-                    if(not visited[v]){
-                        distances[v] = distances[u] + 1;
-                        visited[v] = true;
-                        Q.push(v);
-                    }
-                }
-            }
-            // compute global influence as the sum of all influences
-            double globalInfluence = 0.0;
-            for(int i = 0; i < n; i++){
-                globalInfluence += pow(this->p,distances[i]);
-            }
-            return globalInfluence;
         }
 };
 #endif

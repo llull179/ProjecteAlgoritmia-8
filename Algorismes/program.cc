@@ -19,8 +19,6 @@ int main(int argc, char * argv[]){
         return -1;
     }
 
-
-
     // manual graph input
     if(argc == 1){
         int n, m; double pr;
@@ -38,7 +36,7 @@ int main(int argc, char * argv[]){
         g.readEdges(m, pr);
 
         // begin difusion
-        if(dmode == "IC")  g.beginDifusion_IC_v3(); 
+        if(dmode == "IC")  g.beginDifusion_IC_v2(); 
         else ;
 
     }
@@ -56,7 +54,7 @@ int main(int argc, char * argv[]){
         g.readEdgesFromFile(pr, INPUT_PATH + filename);
 
         // begin difusion
-        if(dmode == "IC")  g.beginDifusion_IC_v3(); 
+        if(dmode == "IC")  g.beginDifusion_IC_v2(); 
         else ;   
     }
     else{
