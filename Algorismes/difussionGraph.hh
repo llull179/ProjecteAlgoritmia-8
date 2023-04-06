@@ -384,6 +384,12 @@ class difussionGraph {
 
         vector<bool> getRandomNodes() {
             vector<bool> nodes (n,false);
+            bool findSolution = false;
+            while(!findSolution) {
+                int rand_num = rand() % n;
+                if(!nodes[rand_num]) nodes[rand_num] = true;
+                findSolution = isSolution(nodes,true);
+            } 
             return nodes;
         }
         vector<bool> getMinDominantSet() {
