@@ -23,8 +23,11 @@ class difussionGraph {
         vector <bool> spreadedNodes;
         // subset of nodes to spread
         queue <int> nodesToSpread;
-        // spreading probability
+        // double representing the spreading probability needed if modeling IC or the influence ratio used if modeling LT
         double p;
+        // number of nodes already spreaded when modeling LT
+        int spreaded;
+
 
     public:
         /***********************************************************************************************************
@@ -37,6 +40,7 @@ class difussionGraph {
             g.resize(n);
             cout << g.size() << endl;
             spreadedNodes.resize(n, false);
+            spreaded = 0;
         }
 
         /***********************************************************************************************************
@@ -88,7 +92,7 @@ class difussionGraph {
             } 
         }
 
-        double computeNodeInfluence(int src){
+        double computeNodeInfluenceIC(int src){
             // Priority queue for vertices that are being processed
             queue <int> Q;
             Q.push(src);
@@ -123,6 +127,66 @@ class difussionGraph {
                 globalInfluence += pow(this->p,distances[i]);
             }
             return globalInfluence;
+        }
+
+        // Computation of each nodes influence under the LT model using Djikstra's algorithm for navigating weighted graphs.
+        double computeNodeInfluenceLT(int src){
+            // Priority queue for vertices that are being processed
+            priority_queue < pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > Q;
+            Q.push(make_pair(0,src));
+
+            // Vector for disntances
+            vector <double> distances(this->n, 0);
+            distances[src] = 1;
+
+            // Vector for visited nodes
+            vector <bool> visited(n, false);
+
+            while(not Q.empty()){
+                // next node
+                int u = Q.top().second;
+                Q.pop();
+                if (not visited[u]) {
+                    visited[u] = true;
+                    // visit all neightbours
+                    for(int i = 0; i < g[u].size(); i++){
+                        // next neightbour
+                        int v = g[u][i];
+                        // modify distance if necesssary
+                        double s = g[v].size();
+                        if(distances[v] < distances[u]+distances[u]*1/s){
+                            distances[v] = distances[u] + distances[u]*1/s;
+                            visited[v] = true;
+                            Q.push(make_pair(-distances[v], v));
+                        }
+                    }
+                }
+            }
+            // compute global influence as the sum of all influences
+            double globalInfluence = 0.0;
+            for(int i = 0; i < n; i++){
+                globalInfluence += distances[i];
+            }
+            return globalInfluence;
+        }
+
+        // print graph
+        void printGraph(){
+            for(int i = 0; i<n; i++){
+                cout << "node " << i << " :";
+                for(int j = 0; j< g[i].size(); j++){
+                    cout << " " <<  g[i][j];
+                }
+                cout << endl;
+            }
+        }
+
+        // print nodes belong to the diffusion subset
+        void printDifusionSubstet(){
+            for(int i = 0; i < spreadedNodes.size(); i++){
+                if(spreadedNodes[i]) cout << i << " ";
+            }
+            cout << endl;
         }
 
         /***********************************************************************************************************
@@ -208,23 +272,97 @@ class difussionGraph {
             return numPropagatedNodes;
         }
 
-        // print graph
-        void printGraph(){
-            for(int i = 0; i<n; i++){
-                cout << "node " << i << " :";
-                for(int j = 0; j< g[i].size(); j++){
-                    cout << " " <<  g[i][j];
-                }
-                cout << endl;
+        
+
+        /***********************************************************************************************************
+        LINEAR THRESHOLD GREEDY METHODS
+        ***********************************************************************************************************/
+
+        // modify starting subset of nodes
+        int modStartingSubset(const list<int>& l){
+            // if list is empty asks user for nodes
+            cout << spreaded << endl;
+            int added = 0;
+            if(l.size() ==0){
+                // subset of nodes
+                int x;
+                while(cin >> x and x!=-1){
+                    if (not spreadedNodes[x]) {
+                        spreadedNodes[x] = true;
+                        added++;
+                    }
+                }   
             }
+            // otherwise reads nodes from the linked list
+            else{
+                list<int>::const_iterator it=l.begin();
+                while(it != l.end()){
+                    if (not spreadedNodes[*it]) { spreadedNodes[*it] = true; ++added;}
+                    it++;
+                }
+            }
+            spreaded += added;
+            cout << "Added " << added << " nodes to the initial subset" << endl;
+            return added; 
         }
 
-        // print nodes belong to the diffusion subset
-        void printDifusionSubstet(){
-            for(int i = 0; i < spreadedNodes.size(); i++){
-                if(spreadedNodes[i]) cout << i << " ";
+        bool inStartingSubset(int i) {
+            return spreadedNodes[i];
+        }
+
+        // propagation
+        int propagateLT_v1(){
+            int steps = 0;
+            auto begin = std::chrono::high_resolution_clock::now();
+            vector<bool> newSpreadedNodes = spreadedNodes;
+            int newV = -1;
+            while(spreaded < n and newV != 0){
+                newV = 0;
+                spreadedNodes = newSpreadedNodes;
+                steps++;
+                for(int i = 0; i < n; i++){
+                    if(not spreadedNodes[i]){
+                        // tries propagation
+                        double count = 0;
+                        double s = g[i].size();
+                        for (int j = 0; j < s; ++j) {
+                            if (spreadedNodes[g[i][j]]) ++count;
+                        }
+                        if (count >= s*this->p) {newSpreadedNodes[i] = true; ++newV;}
+                    }
+                }
+                spreaded += newV;
             }
-            cout << endl;
+            int result = spreaded;
+            spreaded = 0;
+            spreadedNodes = vector<bool>(n, false);
+            return result;
+        }
+
+        int propagateLT_v23(){
+            int steps = 0;
+            auto begin = std::chrono::high_resolution_clock::now();
+            vector<bool> newSpreadedNodes = spreadedNodes;
+            int newV = -1;
+            while(spreaded < n and newV != 0){
+                newV = 0;
+                spreadedNodes = newSpreadedNodes;
+                steps++;
+                for(int i = 0; i < n; i++){
+                    if(not spreadedNodes[i]){
+                        // tries propagation
+                        double count = 0;
+                        double s = g[i].size();
+                        for (int j = 0; j < s; ++j) {
+                            if (spreadedNodes[g[i][j]]) ++count;
+                        }
+                        if (count >= s*this->p) {newSpreadedNodes[i] = true; ++newV;}
+                    }
+                }
+                spreaded += newV;
+            }
+
+            return spreaded;
         }
 
         /***********************************************************************************************************

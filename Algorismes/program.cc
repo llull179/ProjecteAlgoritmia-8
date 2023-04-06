@@ -37,7 +37,7 @@ int main(int argc, char * argv[]){
 
         // begin difusion
         if(dmode == "IC")  g.beginDifusion_IC_v2(); 
-        else ;
+        else g.beginDifusion_LT_v2();
 
     }
 
@@ -53,9 +53,9 @@ int main(int argc, char * argv[]){
 
         g.readEdgesFromFile(pr, INPUT_PATH + filename);
 
-        // begin difusion
+        // begin difusion 
         if(dmode == "IC")  g.beginDifusion_IC_v2(); 
-        else ;   
+        else g.beginDifusion_LT_v1();   
     }
     else{
         cerr << "Invalid number of arguments." << endl;

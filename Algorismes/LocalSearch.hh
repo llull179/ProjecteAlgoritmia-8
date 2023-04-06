@@ -44,7 +44,7 @@ class LocalSearch: public difussionGraph{
 
         vector<double> influence(n,0);
         for(int i = 0; i< n; i++) {
-            influence[i] = computeNodeInfluence(i);
+            influence[i] = computeNodeInfluenceIC(i);
         }
         vector<int> meanInfluence;
         bool converge = false;

@@ -33,7 +33,185 @@ class Greedy: public difussionGraph{
         LINEAR THRESHOLD METHODS
         ***********************************************************************************************************/
 
-        // ...
+        void beginDifusion_LT_v1(){
+            // initially no nodes propagated
+            int propagatedNodes = 0;
+            list<int> subset;
+            vector<bool> inSubset(n, false);
+            // Prints is redirected to a file
+            ofstream file;
+            file.open("output-LT-difusion-v1");   
+
+            // sets timer
+            auto begin = std::chrono::high_resolution_clock::now();
+            int iteration = 0;
+            list<int> newSubset = subset;
+            int newPropagatedNodes = propagatedNodes;
+            while(propagatedNodes != this->n){
+                int maxInfluence = 0;
+                int idx = 0;
+                for(int i = 0; i < this->n; i++){
+                    // pick node not propagated yet
+                    if(not inSubset[i]){
+                        double nodeInfluence = computeNodeInfluenceLT(i);
+                        if(nodeInfluence > maxInfluence){
+                            maxInfluence = nodeInfluence;
+                            idx = i;
+                        }
+                    }
+                }
+                // add node to subset
+                if (not inStartingSubset(idx)) {
+                    inSubset[idx] = true;
+                    subset.push_back(idx);
+                    modStartingSubset(subset);
+                    newPropagatedNodes = propagateLT_v1(); 
+                    if (newPropagatedNodes == propagatedNodes) {
+                        subset.pop_back();
+                    }
+                    else propagatedNodes = newPropagatedNodes;
+                    iteration++;
+
+                    // output to file current subset
+                    file << "Iteration " << iteration << ", current subset of nodes:";
+                    list<int>::const_iterator it=subset.begin();
+                    while(it != subset.end()){
+                        file << " " << (*it);
+                        it++;
+                    }file << endl << "--------------------" << endl << endl;
+                }
+            }                
+            // stop elapsed timer
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+            file << "Difusion completed in " << iteration << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
+            file.close();
+
+            cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
+        }
+        
+        void beginDifusion_LT_v2(){
+            // initially no nodes propagated
+            int propagatedNodes = 0;
+            list<int> subset;
+            vector<bool> inSubset(n, false);
+            // Prints is redirected to a file
+            ofstream file;
+            file.open("output-LT-difusion-v2");   
+            // sets timer
+            auto begin = std::chrono::high_resolution_clock::now();
+            int iteration = 0;
+            list<int> newSubset = subset;
+            int newPropagatedNodes = propagatedNodes;
+            
+            while(propagatedNodes != this->n){
+                //cout << "We here" << endl; 
+                cout << propagatedNodes << endl;
+                int maxInfluence = 0;
+                int idx = 0;
+                for(int i = 0; i < this->n; i++){
+                    // pick node not propagated yet
+                    if(not inSubset[i]){
+                        double nodeInfluence = computeNodeInfluenceLT(i);
+                        if(nodeInfluence > maxInfluence){
+                            maxInfluence = nodeInfluence;
+                            idx = i;
+                        }
+                    }
+                }
+                // add node to subset
+                if (not inStartingSubset(idx)) {
+                    inSubset[idx] = true;
+                    subset.push_back(idx);
+                    list<int> l;
+                    l.push_back(idx);
+                    if (modStartingSubset(l) > 0) {
+                        newPropagatedNodes = propagateLT_v23(); 
+                        if (newPropagatedNodes == propagatedNodes) {
+                            subset.pop_back();
+                        }
+                        else propagatedNodes = newPropagatedNodes;
+                        iteration++;
+
+                        // output to file current subset
+                        file << "Iteration " << iteration << ", current subset of nodes:";
+                        list<int>::const_iterator it=subset.begin();
+                        while(it != subset.end()){
+                            file << " " << (*it);
+                            it++;
+                        }file << endl << "--------------------" << endl << endl;
+                    }
+                    else subset.pop_back();
+                }
+               // cout << "Iteration " << iteration << ": " << propagatedNodes << " nodes expanded" << endl;
+            }                
+            // stop elapsed timer
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+            file << "Difusion completed in " << iteration << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
+            file.close();
+
+            cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
+        }
+        
+        
+        void beginDifusion_LT_v3(){
+            // initially no nodes propagated
+            int propagatedNodes = 0;
+            list<int> subset;
+            vector<bool> inSubset(n, false);
+            // Prints is redirected to a file
+            ofstream file;
+            file.open("output-LT-difusion-v3");   
+
+            // sets timer
+            auto begin = std::chrono::high_resolution_clock::now();
+            priority_queue < ppair, vector<ppair>, less<ppair> > Q;
+            for (int i = 0; i < this -> n; ++i) {
+                int p = computeNodeInfluenceLT(i);
+                Q.push(make_pair(p,i));
+            }
+
+            int iteration = 0;
+            list<int> newSubset = subset;
+            int newPropagatedNodes = propagatedNodes;
+            while(propagatedNodes != this->n){
+
+                int idx = Q.top().second;
+                Q.pop();
+                // add node to subset
+                if (not inStartingSubset(idx)) {
+                    inSubset[idx] = true;
+                    subset.push_back(idx);
+                    list<int> l;
+                    l.push_back(idx);
+                    if (modStartingSubset(l) > 0) {
+                        newPropagatedNodes = propagateLT_v23(); 
+                        if (newPropagatedNodes == propagatedNodes) {
+                            subset.pop_back();
+                        }
+                        else propagatedNodes = newPropagatedNodes;
+                        iteration++;
+
+                        // output to file current subset
+                        file << "Iteration " << iteration << ", current subset of nodes:";
+                        list<int>::const_iterator it=subset.begin();
+                        while(it != subset.end()){
+                            file << " " << (*it);
+                            it++;
+                        }file << endl << "--------------------" << endl << endl;
+                    }
+                    else subset.pop_back();
+                }
+            }                
+            // stop elapsed timer
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+            file << "Difusion completed in " << iteration << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
+            file.close();
+
+            cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
+        }
 
         /***********************************************************************************************************
         INDEPENDENT CASCADE METHODS
@@ -63,7 +241,7 @@ class Greedy: public difussionGraph{
                 for(int i = 0; i < this->n; i++){
                     // pick node not propagated yet
                     if(not inSubset[i]){
-                        double nodeInfluence = computeNodeInfluence(i);
+                        double nodeInfluence = computeNodeInfluenceIC(i);
                         if(nodeInfluence > maxInfluence){
                             maxInfluence = nodeInfluence;
                             idx = i;
@@ -118,7 +296,7 @@ class Greedy: public difussionGraph{
                 for(int i = 0; i < this->n; i++){
                     // pick node not propagated yet
                     if(not this->spreadedNodes[i]){
-                        double nodeInfluence = computeNodeInfluence(i);
+                        double nodeInfluence = computeNodeInfluenceIC(i);
                         if(nodeInfluence > maxInfluence){
                             maxInfluence = nodeInfluence;
                             idx = i;
@@ -163,7 +341,7 @@ class Greedy: public difussionGraph{
             // computes all Influence one time only
             for(int i = 0; i < this->n; i++){
                 // pick node not propagated yet
-                double nodeInfluence = computeNodeInfluence(i);
+                double nodeInfluence = computeNodeInfluenceIC(i);
                 Q.push(make_pair(nodeInfluence, i));                
             }
 
