@@ -35,7 +35,8 @@ class difussionGraph {
         ***********************************************************************************************************/
         difussionGraph(){}
 
-        difussionGraph(int n){
+        difussionGraph(int n, double p){
+            this -> p = p;
             this-> n = n;
             g.resize(n);
             cout << g.size() << endl;
@@ -48,7 +49,7 @@ class difussionGraph {
         ***********************************************************************************************************/
 
 
-        virtual void readEdges(int m, double p){
+        virtual void readEdges(int m){
             this-> m = m;
 
             for(int i = 0; i < m; i++){
@@ -58,7 +59,6 @@ class difussionGraph {
                 g[a].push_back(b);
                 g[b].push_back(a);
             }
-            this->p = p;     
         }
 
         virtual void readEdgesFromFile(double pr, string filename){
