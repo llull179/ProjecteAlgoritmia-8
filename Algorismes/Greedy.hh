@@ -24,6 +24,12 @@ class Greedy: public difussionGraph{
             spreadedNodes.resize(n, false);
         }
 
+        Greedy(const vector<vector<int>>& graf, double prob){
+            n = graf.size();
+            g = graf;
+            p = prob;
+            spreadedNodes.resize(n, false);
+        }
         /***********************************************************************************************************
         PUBLIC METHODS
         ***********************************************************************************************************/

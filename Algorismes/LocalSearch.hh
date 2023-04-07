@@ -31,17 +31,22 @@ class LocalSearch: public difussionGraph{
     void beginDifusion(bool modeIC, int mode) {
         // Prints is redirected to a file
         ofstream file;
-        file.open("output-IC-difusion");   
+        string fileToOpen;
+        if(modeIC) fileToOpen = "output-IC-difusion";
+        else fileToOpen = "output-LT-difusion";
+        file.open(fileToOpen);   
 
         // sets timer
         auto begin = std::chrono::high_resolution_clock::now();
         int iteration = 0;
         vector<bool> sol;
-        if(mode == 0) sol = getRandomNodes();
+        if(mode == 0) sol = getRandomNodes(modeIC);
         else if(mode == 1) {
             sol = getMinDominantSet();
         }
-        else /*/sol = //beginGreedy/*/;
+        else {
+            Greedy gred = Greedy(g,p)
+        }
 
         vector<double> influence(n,0);
         if(modeIC) {
@@ -57,6 +62,12 @@ class LocalSearch: public difussionGraph{
         
         bool converge = false;
         
+        file << "Iteration " << iteration << ", initial subset of nodes:";
+        for(int i = 0; i < this->n; i++){
+                    if(sol[i]) file << " " << i;
+                } 
+                file << endl << "--------------------" << endl << endl;
+
         while(!converge) {
             //Calcular la mitjana de la influencia de tots els veis de cada node
             priority_queue<myPair> meanInfluence;
@@ -81,13 +92,10 @@ class LocalSearch: public difussionGraph{
             int it = 0;
             while(it < meanInfluence.size() && !findSolution) {
                 sol[minNod] = false;
-                cout<<"comprovant"<<minNod<<endl;
                 if(isSolution(sol,modeIC)) {
-                    cout<<"Es una sol"<<endl;
                     findSolution = true;
                 }
                 else {
-                    cout <<" no es una solució"<<endl;
                     sol[minNod] = true;
                     minInfl = meanInfluence.top().second;
                     minNod = meanInfluence.top().first;

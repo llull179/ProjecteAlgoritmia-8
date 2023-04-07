@@ -375,20 +375,18 @@ class difussionGraph {
         //Comprova si el conjunt de nodes 'sol' és una solució vàlida
         //Si checkIC es true comprova pel model de solució per IC, en cas contrari comprova la solució
         //pel model de difusió de LT
-        bool isSolution(const vector<bool>& sol,bool checkIC) {
+        bool isSolution(const vector<bool>& sol,bool modeIC) {
             vector<bool> aux = spreadedNodes;
             spreadedNodes = sol;
-            int m  = propagateIC_v23();
-            cout <<m<<"and"<<n<<endl;
-            if(checkIC && m == n) return true;
-            else if(!checkIC && propagateLT_v23() == n) return true;
+            if(modeIC && propagateIC_v23() == n) return true;
+            else if(!modeIC && propagateLT_v23() == n) return true;
             else {
                 spreadedNodes = aux;
                 return false;
             } 
         
         }
-
+        
         vector<bool> getRandomNodes(bool modeIC) {
             vector<bool> result(n,false);
             bool findSolution = false;
