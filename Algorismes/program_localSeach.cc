@@ -63,7 +63,7 @@ int main(int argc, char * argv[]){
 
         // begin difusion
         
-        int mode = askMode();
+        int mode = askMode();  
 
         if(dmode == "IC")  g.beginDifusion(true,mode); 
         else g.beginDifusion(false,mode);   
