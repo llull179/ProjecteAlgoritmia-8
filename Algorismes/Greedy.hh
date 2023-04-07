@@ -17,8 +17,9 @@ class Greedy: public difussionGraph{
         ***********************************************************************************************************/
         Greedy(){}
 
-        Greedy(int n){
+        Greedy(int n, double p){
             this-> n = n;
+            this -> p = p;
             g.resize(n);
             spreadedNodes.resize(n, false);
         }
