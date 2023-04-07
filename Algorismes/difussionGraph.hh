@@ -62,14 +62,14 @@ class difussionGraph {
         }
 
         virtual void readEdgesFromFile(double pr, string filename){
-            this-> m = 0;
-            this->p = pr;     
+             m = 0;
+            p = pr;     
 
             // read graph from file
             ifstream file(filename);
 
             // read graph dimension
-            file >> this-> n;
+            file >> n;
             g.resize(n);
             spreadedNodes.resize(n, false);
 
@@ -79,7 +79,7 @@ class difussionGraph {
                 // add edge
                 g[a].push_back(b);
                 g[b].push_back(a);
-                this->m++;
+                m++;
             }
             file.close();
         }

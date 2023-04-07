@@ -1,6 +1,6 @@
 #include "SA.hh"
 #include <string>
-#define INPUT_PATH "../input-graphs/"
+#define INPUT_PATH "../Utilities/input-graphs/"
 using namespace std;
 
 
@@ -21,22 +21,27 @@ int main(int argc, char * argv[]){
         vector<bool> sol_ini = G.getMinDominantSet();
         //definim la temperatura
         int temp = 100;
-        vector<bool> sol_fin = G.simulated_annealing(sol_ini,temp);
+        G.simulated_annealing(sol_ini,temp);
 
     }
     // graph input from file
     else if (argc == 2){
+                          
         string filename = argv[1];
         SA G = SA();
         
         cout << "Introduce Spreading probability: ";
         double r; cin >> r; cout << endl;
+        
+
         G.readEdgesFromFile(r, INPUT_PATH + filename);
 
        vector<bool> sol_ini = G.getMinDominantSet();
+        cout << "hola" << endl;
         //definim la temperatura
         int temp = 100;
-        vector<bool> sol_fin = G.simulated_annealing(sol_ini,temp);
+ 
+        G.simulated_annealing(sol_ini,temp);
     }
     else{
         cerr << "Invalid number of arguments." << endl;
