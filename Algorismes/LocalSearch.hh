@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "difussionGraph.hh"
+#include "Greedy.hh"
 #include <queue>
 
 using namespace std;
