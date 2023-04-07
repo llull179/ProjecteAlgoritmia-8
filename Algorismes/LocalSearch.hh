@@ -45,7 +45,9 @@ class LocalSearch: public difussionGraph{
             sol = getMinDominantSet();
         }
         else {
-            Greedy gred = Greedy(g,p)
+            Greedy gred = Greedy(g,p);
+            if(modeIC) gred.beginDifusion_IC_v3();
+            else gred.beginDifusion_LT_v3();
         }
 
         vector<double> influence(n,0);
