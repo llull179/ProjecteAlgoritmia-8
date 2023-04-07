@@ -35,7 +35,7 @@ class SA: public difussionGraph {
                     if (sol[r]) {
                         aux = sol;
                         aux[r] = false;
-                        if(isSolution(aux)) sol[r] = false;//CAL CANVIAR
+                        if(isSolution(aux,false)) sol[r] = false;//CAL CANVIAR
                         else --i; //no volem comptar les iteracions que surten de l'espai de solucions
                     }
                     //no forma part de S (veiem si el podem afegir)
