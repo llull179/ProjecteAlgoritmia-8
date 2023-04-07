@@ -33,6 +33,7 @@ class SA: public difussionGraph {
             vector<int> espai_solucions;
             while(temp > 0) {
                 for (int i = 0; i < 10; ++i) {   
+                    espai_solucions.clear();
                     for(int i = 0; i < sol.size(); ++i) {
                         if (sol[i]) {
                             sol[i] = false;
@@ -52,7 +53,7 @@ class SA: public difussionGraph {
                     }
                     cout << temp << endl;
                 }
-                
+      
                 --temp;
             }
              cout << "he acabado" << endl;
