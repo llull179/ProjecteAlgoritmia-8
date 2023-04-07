@@ -38,44 +38,59 @@ class LocalSearch: public difussionGraph{
         vector<bool> sol;
         if(mode == 0) sol = getRandomNodes();
         else if(mode == 1) {
-            sol = this->getMinDominantSet();
+            sol = getMinDominantSet();
         }
         else /*/sol = //beginGreedy/*/;
 
         vector<double> influence(n,0);
-        for(int i = 0; i< n; i++) {
-            influence[i] = computeNodeInfluenceIC(i);
+        if(modeIC) {
+            for(int i = 0; i< n; i++) {
+                influence[i] = computeNodeInfluenceIC(i);
+            }
         }
-        vector<int> meanInfluence;
+            else {
+            for(int i = 0; i< n; i++) {
+                influence[i] = computeNodeInfluenceLT(i);
+            } 
+        }
+        
         bool converge = false;
         
         while(!converge) {
             //Calcular la mitjana de la influencia de tots els veis de cada node
             priority_queue<myPair> meanInfluence;
             myPair pair;
-            for(auto i: sol) {
-                double sum = 0;
-                double count = 0;
-                for(auto j: g[i]) {
-                    ++count;
-                    sum += influence[j];
-                }
-                pair.first = i;
-                pair.second = sum/count;
-                meanInfluence.push(pair) ;
+            for(int i =0; i < sol.size();++i) {       
+                if(sol[i]) {
+                    double sum = 0;
+                    double count = 0;
+                    for(int j; j<g[i].size(); ++j) {
+                        ++count;
+                        sum += influence[j];
+                    }
+                    pair.first = i;
+                    pair.second = sum/count;
+                    meanInfluence.push(pair) ;
+                }     
             }
             int minInfl = meanInfluence.top().second;
             int minNod = meanInfluence.top().first;;
-
+            meanInfluence.pop();
             bool findSolution = false;
             int it = 0;
             while(it < meanInfluence.size() && !findSolution) {
                 sol[minNod] = false;
-                if(isSolution(sol,true)) {
+                cout<<"comprovant"<<minNod<<endl;
+                if(isSolution(sol,modeIC)) {
+                    cout<<"Es una sol"<<endl;
                     findSolution = true;
                 }
                 else {
+                    cout <<" no es una solució"<<endl;
                     sol[minNod] = true;
+                    minInfl = meanInfluence.top().second;
+                    minNod = meanInfluence.top().first;
+                    meanInfluence.pop();
                 }
                 ++it;
                 ++iteration;

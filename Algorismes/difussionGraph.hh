@@ -245,6 +245,9 @@ class difussionGraph {
 
         int propagateIC_v23(){
             int steps = 0;
+            for(int i = 0; i < spreadedNodes.size(); ++i) {
+                if(spreadedNodes[i]) nodesToSpread.push(i);
+            } 
             int numPropagatedNodes = nodesToSpread.size();
 
             while(not nodesToSpread.empty()){
@@ -372,25 +375,30 @@ class difussionGraph {
         //Comprova si el conjunt de nodes 'sol' és una solució vàlida
         //Si checkIC es true comprova pel model de solució per IC, en cas contrari comprova la solució
         //pel model de difusió de LT
-        bool isSolution(const vector<bool>& sol, bool checkIC) {
-            for(int i = 0; i < sol.size(); ++i) {
-                if(sol[i]) nodesToSpread.push(i);
+        bool isSolution(const vector<bool>& sol,bool checkIC) {
+            vector<bool> aux = spreadedNodes;
+            spreadedNodes = sol;
+            int m  = propagateIC_v23();
+            cout <<m<<"and"<<n<<endl;
+            if(checkIC && m == n) return true;
+            else if(!checkIC && propagateLT_v23() == n) return true;
+            else {
+                spreadedNodes = aux;
+                return false;
             } 
-            if(checkIC && propagateIC_v23() == n) return true;
-        // else if(!checkIC && propagateLT() == n) return true;
-            else return false;
         
         }
 
-        vector<bool> getRandomNodes() {
-            vector<bool> nodes (n,false);
+        vector<bool> getRandomNodes(bool modeIC) {
+            vector<bool> result(n,false);
             bool findSolution = false;
             while(!findSolution) {
                 int rand_num = rand() % n;
-                if(!nodes[rand_num]) nodes[rand_num] = true;
-                findSolution = isSolution(nodes,true);
-            } 
-            return nodes;
+                if(!result[rand_num]) result[rand_num] = true;
+                findSolution = isSolution(result,modeIC);
+            }
+            spreadedNodes = result;
+            return result; 
         }
         vector<bool> getMinDominantSet() {
             vector<bool> uncovered(n, true);
@@ -438,11 +446,12 @@ class difussionGraph {
                 }
 
             }
-            vector<bool> result(n,false);
+            vector<bool>result(n,false);
             while(!q.empty()) {
                 result[q.front()] = true;
                 q.pop();
             }
+            spreadedNodes = result;
             return result;
         }
 };
