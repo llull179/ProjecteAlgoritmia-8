@@ -30,6 +30,7 @@ class Greedy: public difussionGraph{
             g = graf;
             p = prob;
             spreadedNodes.resize(n, false);
+            spreaded = 0;
         }
         /***********************************************************************************************************
         PUBLIC METHODS

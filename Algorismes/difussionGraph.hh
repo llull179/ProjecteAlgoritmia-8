@@ -64,9 +64,9 @@ class difussionGraph {
         }
 
         virtual void readEdgesFromFile(double pr, string filename){
-            this-> m = 0;
-            this-> p = pr;  
-            this-> spreaded = 0;   
+            m = 0;
+            p = pr;  
+            spreaded = 0;   
 
             // read graph from file
             ifstream file(filename);
