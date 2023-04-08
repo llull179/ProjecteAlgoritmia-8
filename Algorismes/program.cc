@@ -24,7 +24,6 @@ int main(int argc, char * argv[]){
         int n, m; double pr;
         cout << "Number of nodes: " ;
         cin >> n;
-        Greedy g = Greedy(n);
         cout << "Number of edges: " ;
         cin >> m;
 
@@ -32,8 +31,9 @@ int main(int argc, char * argv[]){
         else  cout << "Introduce Spreading ratio: ";
         cin >> pr; cout << endl;
 
+        Greedy g = Greedy(n,pr);
         cout << "Introduce edges in the folllowing format : i j " << endl;
-        g.readEdges(m, pr);
+        g.readEdges(m);
 
         // begin difusion
         if(dmode == "IC")  g.beginDifusion_IC_v2(); 

@@ -1,10 +1,10 @@
-TARGET: program
+TARGET: SA
 
 COMPILER: g++
 
 FLAGS: -std=c++11 -Wall -Wextra
 
-SRCS: program.cc difussionGraph.hh Greedy.hh LocalSearch.hh
+SRCS: SA.cc difussionGraph.hh Greedy.hh 
 
 OBJS: $(SRCS:.cc=.o)
 

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "difussionGraph.hh"
+#include "Greedy.hh"
 #include <queue>
 
 using namespace std;
@@ -21,8 +22,9 @@ class LocalSearch: public difussionGraph{
     public:
     LocalSearch(){}
 
-    LocalSearch(int n){
+    LocalSearch(int n, double p){
         this-> n = n;
+        this -> p = p;
         g.resize(n);
         spreadedNodes.resize(n, false);
     }
@@ -30,52 +32,77 @@ class LocalSearch: public difussionGraph{
     void beginDifusion(bool modeIC, int mode) {
         // Prints is redirected to a file
         ofstream file;
-        file.open("output-IC-difusion");   
+        string fileToOpen;
+        if(modeIC) fileToOpen = "output-IC-difusion";
+        else fileToOpen = "output-LT-difusion";
+        file.open(fileToOpen);   
 
         // sets timer
         auto begin = std::chrono::high_resolution_clock::now();
         int iteration = 0;
         vector<bool> sol;
-        if(mode == 0) sol = getRandomNodes();
+        if(mode == 0) sol = getRandomNodes(modeIC);
         else if(mode == 1) {
-            sol = this->getMinDominantSet();
+            sol = getMinDominantSet();
         }
-        else /*/sol = //beginGreedy/*/;
+        else {
+            Greedy gred = Greedy(g,p);
+            if(modeIC) gred.beginDifusion_IC_v3();
+            else gred.beginDifusion_LT_v3();
+        }
 
         vector<double> influence(n,0);
-        for(int i = 0; i< n; i++) {
-            influence[i] = computeNodeInfluenceIC(i);
+        if(modeIC) {
+            for(int i = 0; i< n; i++) {
+                influence[i] = computeNodeInfluenceIC(i);
+            }
         }
-        vector<int> meanInfluence;
+            else {
+            for(int i = 0; i< n; i++) {
+                influence[i] = computeNodeInfluenceLT(i);
+            } 
+        }
+        
         bool converge = false;
         
+        file << "Iteration " << iteration << ", initial subset of nodes:";
+        for(int i = 0; i < this->n; i++){
+                    if(sol[i]) file << " " << i;
+                } 
+                file << endl << "--------------------" << endl << endl;
+
         while(!converge) {
             //Calcular la mitjana de la influencia de tots els veis de cada node
             priority_queue<myPair> meanInfluence;
             myPair pair;
-            for(auto i: sol) {
-                double sum = 0;
-                double count = 0;
-                for(auto j: g[i]) {
-                    ++count;
-                    sum += influence[j];
-                }
-                pair.first = i;
-                pair.second = sum/count;
-                meanInfluence.push(pair) ;
+            for(int i =0; i < sol.size();++i) {       
+                if(sol[i]) {
+                    double sum = 0;
+                    double count = 0;
+                    for(int j; j<g[i].size(); ++j) {
+                        ++count;
+                        sum += influence[j];
+                    }
+                    pair.first = i;
+                    pair.second = sum/count;
+                    meanInfluence.push(pair) ;
+                }     
             }
             int minInfl = meanInfluence.top().second;
             int minNod = meanInfluence.top().first;;
-
+            meanInfluence.pop();
             bool findSolution = false;
             int it = 0;
             while(it < meanInfluence.size() && !findSolution) {
                 sol[minNod] = false;
-                if(isSolution(sol,true)) {
+                if(isSolution(sol,modeIC)) {
                     findSolution = true;
                 }
                 else {
                     sol[minNod] = true;
+                    minInfl = meanInfluence.top().second;
+                    minNod = meanInfluence.top().first;
+                    meanInfluence.pop();
                 }
                 ++it;
                 ++iteration;

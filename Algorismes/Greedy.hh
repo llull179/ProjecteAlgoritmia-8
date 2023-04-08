@@ -17,13 +17,20 @@ class Greedy: public difussionGraph{
         ***********************************************************************************************************/
         Greedy(){}
 
-        Greedy(int n){
+        Greedy(int n, double p){
             this-> n = n;
+            this -> p = p;
             g.resize(n);
             spreadedNodes.resize(n, false);
             spreaded = 0;
         }
 
+        Greedy(const vector<vector<int>>& graf, double prob){
+            n = graf.size();
+            g = graf;
+            p = prob;
+            spreadedNodes.resize(n, false);
+        }
         /***********************************************************************************************************
         PUBLIC METHODS
         ***********************************************************************************************************/
