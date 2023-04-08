@@ -58,12 +58,14 @@ class difussionGraph {
                 g[a].push_back(b);
                 g[b].push_back(a);
             }
-            this->p = p;     
+            this-> p = p;     
+            this-> spreaded = 0;
         }
 
         virtual void readEdgesFromFile(double pr, string filename){
             this-> m = 0;
-            this->p = pr;     
+            this-> p = pr;  
+            this-> spreaded = 0;   
 
             // read graph from file
             ifstream file(filename);
@@ -281,7 +283,6 @@ class difussionGraph {
         // modify starting subset of nodes
         int modStartingSubset(const list<int>& l){
             // if list is empty asks user for nodes
-            cout << spreaded << endl;
             int added = 0;
             if(l.size() ==0){
                 // subset of nodes
@@ -302,7 +303,6 @@ class difussionGraph {
                 }
             }
             spreaded += added;
-            cout << "Added " << added << " nodes to the initial subset" << endl;
             return added; 
         }
 

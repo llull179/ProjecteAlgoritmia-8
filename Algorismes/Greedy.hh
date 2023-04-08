@@ -21,6 +21,7 @@ class Greedy: public difussionGraph{
             this-> n = n;
             g.resize(n);
             spreadedNodes.resize(n, false);
+            spreaded = 0;
         }
 
         /***********************************************************************************************************
@@ -105,8 +106,6 @@ class Greedy: public difussionGraph{
             int newPropagatedNodes = propagatedNodes;
             
             while(propagatedNodes != this->n){
-                //cout << "We here" << endl; 
-                cout << propagatedNodes << endl;
                 int maxInfluence = 0;
                 int idx = 0;
                 for(int i = 0; i < this->n; i++){
@@ -120,8 +119,8 @@ class Greedy: public difussionGraph{
                     }
                 }
                 // add node to subset
+                inSubset[idx] = true;
                 if (not inStartingSubset(idx)) {
-                    inSubset[idx] = true;
                     subset.push_back(idx);
                     list<int> l;
                     l.push_back(idx);
@@ -143,7 +142,6 @@ class Greedy: public difussionGraph{
                     }
                     else subset.pop_back();
                 }
-               // cout << "Iteration " << iteration << ": " << propagatedNodes << " nodes expanded" << endl;
             }                
             // stop elapsed timer
             auto end = std::chrono::high_resolution_clock::now();
