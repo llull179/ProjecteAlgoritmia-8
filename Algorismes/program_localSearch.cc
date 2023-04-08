@@ -28,7 +28,7 @@ int main(int argc, char * argv[]){
         return -1;
     }
 
-    // manual graph input
+    // manual graph input  
     if(argc == 1){
         int n, m; double pr; 
         cout << "Number of nodes: " ;
@@ -60,7 +60,7 @@ int main(int argc, char * argv[]){
         cin >> pr; cout << endl;
     
         g.readEdgesFromFile(pr, INPUT_PATH + filename);
-        // begin difusion  
+        // begin difusion    
         int mode = askMode();  
 
         if(dmode == "IC")  g.beginDifusion(true,mode); 
