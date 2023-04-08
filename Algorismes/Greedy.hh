@@ -36,7 +36,11 @@ class Greedy: public difussionGraph{
         PUBLIC METHODS
         ***********************************************************************************************************/
         
-        // ...
+        vector<bool> getGreedySolution(bool modeIC) {
+            if(modeIC) beginDifusion_IC_v2();
+            else beginDifusion_LT_v2();
+            return spreadedNodes;
+        }
 
         /***********************************************************************************************************
         LINEAR THRESHOLD METHODS

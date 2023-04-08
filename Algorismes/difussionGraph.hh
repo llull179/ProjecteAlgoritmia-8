@@ -75,11 +75,13 @@ class difussionGraph {
             file >> n;
             g.resize(n);
             spreadedNodes.resize(n, false);
-
             // read graph edges
             int a, b;
             while(file >> a >> b){
                 // add edge
+                a--;
+                b--; 
+                
                 g[a].push_back(b);
                 g[b].push_back(a);
                 m++;
