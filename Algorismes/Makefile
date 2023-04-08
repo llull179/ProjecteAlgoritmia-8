@@ -4,8 +4,7 @@ COMPILER: g++
 
 FLAGS: -std=c++11 -Wall -Wextra
 
-SRCS: SA.cc difussionGraph.hh Greedy.hh 
-
+SRCS: SA.cc SA.hh difussionGraph.hh 
 OBJS: $(SRCS:.cc=.o)
 
 all: $(TARGET)
