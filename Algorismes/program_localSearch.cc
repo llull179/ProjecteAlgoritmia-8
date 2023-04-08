@@ -30,7 +30,7 @@ int main(int argc, char * argv[]){
 
     // manual graph input
     if(argc == 1){
-        int n, m; double pr;
+        int n, m; double pr; 
         cout << "Number of nodes: " ;
         cin >> n;
         if(dmode == "IC") cout << "Introduce Spreading probability: ";
@@ -58,11 +58,9 @@ int main(int argc, char * argv[]){
         if(dmode == "IC") cout << "Introduce Spreading probability: ";
         else cout << "Introduce Spreading ratio: ";
         cin >> pr; cout << endl;
-
+    
         g.readEdgesFromFile(pr, INPUT_PATH + filename);
-
         // begin difusion
-        
         int mode = askMode();  
 
         if(dmode == "IC")  g.beginDifusion(true,mode); 
