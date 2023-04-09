@@ -5,12 +5,12 @@
 int askMode() {
     cout << "Select intial solution model:" << endl;
     cout << "Type <R> for select a random nodes solution"<<endl;
-    cout << "Type <D> for select a Minimum Dominant Set solution"<<endl;
+    cout << "Type <T> for select all nodes solution"<<endl;
     cout << "Type <G> for select a LocalSearch implementation solution"<<endl;
     string dmode;
     cin >> dmode;
     if(dmode == "R") return 0;
-    else if(dmode=="D") return 1;
+    else if(dmode=="T") return 1;
     else return 2;
 }
 
@@ -62,7 +62,7 @@ int main(int argc, char * argv[]){
         //g.readEdgesFromFile(pr, INPUT_PATH + filename);
 
         g.readEdgesFromFile2(pr, INPUT_PATH + filename);
-        // begin difusion        
+        // begin difusion         
         int mode = askMode();  
 
         if(dmode == "IC")  g.beginDifusion(true,mode); 

@@ -75,8 +75,8 @@ int main(int argc, char * argv[]){
             ++c;
         }
         // begin difusion 
-        if(dmode == "LT")  cout << g.testDifusionLT(l)+c; 
-        else cout << g.testDifusionIC(l);
+        if(dmode == "LT")  cout << g.testDifusionLT(l)+c<<endl; 
+        else cout << g.testDifusionIC(l)<<endl;
     }
     else{
         cerr << "Invalid number of arguments." << endl;

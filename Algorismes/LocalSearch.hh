@@ -43,12 +43,15 @@ class LocalSearch: public difussionGraph{
         vector<bool> sol;
         if(mode == 0) sol = getRandomNodes(modeIC);
         else if(mode == 1) {
-            sol = getMinDominantSet();
+            //sol = getMinDominantSet();
+            sol = vector<bool>(n,true);
         }
         else {
             Greedy gred = Greedy(g,p);
-            if(modeIC) gred.beginDifusion_IC_v2();
-            else gred.beginDifusion_LT_v3();
+                if(modeIC){
+                    gred.beginDifusion_startingSubset_IC(sol);
+                }
+                else gred.beginDifusion_startingSubset_LT(sol);
         }
 
         vector<double> influence(n,0);

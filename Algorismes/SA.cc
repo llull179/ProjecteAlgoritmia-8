@@ -9,7 +9,7 @@ int askMode() {
     cout << "Type <R> for select a random nodes solution"<<endl;
     cout << "Type <D> for select a Minimum Dominant Set solution"<<endl;
     cout << "Type <G> for select a LocalSearch implementation solution"<<endl;
-    string dmode;
+    string dmode; 
     cin >> dmode;
     if(dmode == "R") return 0;
     else if(dmode=="D") return 1;

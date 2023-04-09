@@ -13,8 +13,7 @@ class SA: public difussionGraph {
     public:
 
         // constructor and parametrized constructor ------------------------
-        SA(){
-        }
+        SA(){}
 
         SA(int n, double r){
             this -> n = n;
