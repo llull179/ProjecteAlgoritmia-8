@@ -89,6 +89,33 @@ class difussionGraph {
             file.close();
         }
 
+        virtual void readEdgesFromFile2(double pr, string filename){
+            m = 0;
+            p = pr;  
+            spreaded = 0;   
+
+            // read graph from file
+            ifstream file(filename);
+
+            // read graph dimension
+            string s1, s2;
+            file >> s1 >> s2 >> n >> m;   // a and b ignored
+            cout << "n: " << n << endl << "m : " << m << endl;
+            g.resize(n);
+            spreadedNodes.resize(n, false);
+            // read graph edges
+            int a, b;
+            while(file >> s1 >> a >> b){
+                // add edge
+                a--;
+                b--; 
+                
+                g[a].push_back(b);
+                g[b].push_back(a);
+            }
+            file.close();
+        }
+
 
         // read starting subset of nodes
         void enqueueStartingSet(){
