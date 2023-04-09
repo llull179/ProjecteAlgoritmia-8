@@ -31,7 +31,7 @@ int main(int argc, char * argv[]){
         G.readEdges(m);
         int mode = askMode();
         //definim la temperatura
-        int temp = 100;
+        int temp = 50;
             // ask user for difussion model
         cout << "Select difusion model:" << endl;
         cout << "Type <IC> for independent cascade, or <LT> for Linear Threshold" << endl;
@@ -64,7 +64,7 @@ int main(int argc, char * argv[]){
         int mode = askMode();
        vector<bool> sol_ini = G.getMinDominantSet();
         //definim la temperatura
-        int temp = 100;
+        int temp = 50;
      // ask user for difussion model
         cout << "Select difusion model:" << endl;
         cout << "Type <IC> for independent cascade, or <LT> for Linear Threshold" << endl;

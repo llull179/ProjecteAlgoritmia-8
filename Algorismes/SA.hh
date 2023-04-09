@@ -40,7 +40,7 @@ class SA: public difussionGraph {
             }
             vector<int> espai_solucions;
             while(temp > 0) {
-                for (int j = 0; j < 100; ++j) {   
+                for (int j = 0; j < 10; ++j) {   
                     espai_solucions.clear();
                     for(int i = 0; i < sol.size(); ++i) {
                         if (sol[i]) {
@@ -61,7 +61,7 @@ class SA: public difussionGraph {
                         if (al <= prob*100) sol[r] = true;
                     }
                 }
-      
+                cout << temp << endl;
                 --temp;
             }             
              for(int i = 0; i < sol.size(); ++i) {

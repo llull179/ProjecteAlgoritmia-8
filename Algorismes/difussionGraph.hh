@@ -422,7 +422,6 @@ class difussionGraph {
                 if(i) spreaded ++;
             }
             int m = propagateLT_v23();
-            cout <<n <<"and"<<m<<endl;
             if(modeIC && propagateIC_v23() == n) return true;
             else if(!modeIC && m == n) return true;
             else {
@@ -432,6 +431,7 @@ class difussionGraph {
         }
         
         vector<bool> getRandomNodes(bool modeIC) {
+            srand ( time(NULL) );
             vector<bool> result(n,false);
             bool findSolution = false;
             while(!findSolution) {
