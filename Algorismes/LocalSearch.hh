@@ -58,8 +58,9 @@ class LocalSearch: public difussionGraph{
             }
         }
             else {
+            vector<bool> v(n,false);
             for(int i = 0; i< n; i++) {
-                influence[i] = computeNodeInfluenceLT(i);
+                influence[i] = computeNodeInfluenceLT(i, v);
             } 
         }
         

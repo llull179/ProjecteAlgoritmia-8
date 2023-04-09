@@ -66,7 +66,7 @@ class Greedy: public difussionGraph{
                 for(int i = 0; i < this->n; i++){
                     // pick node not propagated yet
                     if(not inSubset[i]){
-                        double nodeInfluence = computeNodeInfluenceLT(i);
+                        double nodeInfluence = computeNodeInfluenceLT(i, inSubset);
                         if(nodeInfluence > maxInfluence){
                             maxInfluence = nodeInfluence;
                             idx = i;
@@ -124,7 +124,7 @@ class Greedy: public difussionGraph{
                 for(int i = 0; i < this->n; i++){
                     // pick node not propagated yet
                     if(not inSubset[i]){
-                        double nodeInfluence = computeNodeInfluenceLT(i);
+                        double nodeInfluence = computeNodeInfluenceLT(i, inSubset);
                         if(nodeInfluence > maxInfluence){
                             maxInfluence = nodeInfluence;
                             idx = i;
@@ -180,8 +180,8 @@ class Greedy: public difussionGraph{
             auto begin = std::chrono::high_resolution_clock::now();
             priority_queue < ppair, vector<ppair>, less<ppair> > Q;
             for (int i = 0; i < this -> n; ++i) {
-                int p = computeNodeInfluenceLT(i);
-                Q.push(make_pair(p,i));
+                int ni = computeNodeInfluenceLT(i, inSubset);
+                Q.push(make_pair(ni,i));
             }
 
             int iteration = 0;

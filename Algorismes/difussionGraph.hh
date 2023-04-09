@@ -162,7 +162,7 @@ class difussionGraph {
         }
 
         // Computation of each nodes influence under the LT model using Djikstra's algorithm for navigating weighted graphs.
-        double computeNodeInfluenceLT(int src){
+        double computeNodeInfluenceLT(int src, vector<bool> omit){
             // Priority queue for vertices that are being processed
             priority_queue < pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > Q;
             Q.push(make_pair(0,src));
@@ -186,7 +186,7 @@ class difussionGraph {
                         int v = g[u][i];
                         // modify distance if necesssary
                         double s = g[v].size();
-                        if(distances[v] < distances[u]+distances[u]*1/s){
+                        if(distances[v] < distances[u]+distances[u]*1/s and not omit[i]) {
                             distances[v] = distances[u] + distances[u]*1/s;
                             visited[v] = true;
                             Q.push(make_pair(-distances[v], v));
