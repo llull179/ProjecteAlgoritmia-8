@@ -229,19 +229,13 @@ class Greedy: public difussionGraph{
             cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
         }
 
-        int testDifusionLT(const list<int>& l){
-            readStartingSubset(l);
-            return propagateLT_v23();
-        }
+
 
         /***********************************************************************************************************
         INDEPENDENT CASCADE METHODS
         ***********************************************************************************************************/
 
-        int testDifusionIC(const list<int>& l){
-            readStartingSubset(l);
-            return propagateIC_v23();
-        }
+
 
 
         void beginDifusion_IC_v1(){

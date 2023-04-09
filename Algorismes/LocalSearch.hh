@@ -47,20 +47,19 @@ class LocalSearch: public difussionGraph{
         }
         else {
             Greedy gred = Greedy(g,p);
-            if(modeIC) gred.beginDifusion_IC_v3();
+            if(modeIC) gred.beginDifusion_IC_v2();
             else gred.beginDifusion_LT_v3();
         }
 
         vector<double> influence(n,0);
         if(modeIC) {
             for(int i = 0; i< n; i++) {
-                influence[i] = computeNodeInfluenceIC(i);
+                influence[i] = computeNodeInfluenceIC(i,sol);
             }
         }
             else {
-            vector<bool> v(n,false);
             for(int i = 0; i< n; i++) {
-                influence[i] = computeNodeInfluenceLT(i, v);
+                influence[i] = computeNodeInfluenceLT(i, sol);
             } 
         }
         

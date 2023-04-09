@@ -1,4 +1,5 @@
 #include "difussionGraph.hh"
+#include "Greedy.hh"
 #include <cmath>
 #include <list>
 #include <queue>
@@ -27,9 +28,17 @@ class SA: public difussionGraph {
 
         // public methods --------------------------------------------------
 
-        void simulated_annealing(const vector<bool> & ini, int temp, bool IC, double varEn) {
+        void simulated_annealing(int mode, int temp, bool IC, double varEn) {
             int r;
-            vector<bool> sol = ini;
+            vector<bool> sol;
+
+            if(mode == 0) sol = getRandomNodes(IC);
+            else if(mode == 1) sol = getMinDominantSet();
+            else {
+                Greedy gred = Greedy(g,p);
+                if(IC) gred.beginDifusion_IC_v2();
+                else gred.beginDifusion_LT_v3();
+            }
             vector<int> espai_solucions;
             while(temp > 0) {
                 for (int i = 0; i < 100; ++i) {   

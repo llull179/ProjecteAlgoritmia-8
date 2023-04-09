@@ -306,12 +306,17 @@ class difussionGraph {
             return numPropagatedNodes;
         }
 
+        int testDifusionIC(const list<int>& l){
+            readStartingSubset(l);
+            return propagateIC_v23();
+        }
+
         
 
         /***********************************************************************************************************
         LINEAR THRESHOLD GREEDY METHODS
         ***********************************************************************************************************/
-
+       
         // modify starting subset of nodes
         int modStartingSubset(const list<int>& l){
             // if list is empty asks user for nodes
@@ -395,6 +400,11 @@ class difussionGraph {
             }
 
             return spreaded;
+        }
+
+        int testDifusionLT(const list<int>& l){
+            readStartingSubset(l);
+            return propagateLT_v23();
         }
 
         /***********************************************************************************************************

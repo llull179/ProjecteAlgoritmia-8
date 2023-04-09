@@ -4,10 +4,21 @@
 using namespace std;
 
 
+int askMode() {
+    cout << "Select intial solution model:" << endl;
+    cout << "Type <R> for select a random nodes solution"<<endl;
+    cout << "Type <D> for select a Minimum Dominant Set solution"<<endl;
+    cout << "Type <G> for select a LocalSearch implementation solution"<<endl;
+    string dmode;
+    cin >> dmode;
+    if(dmode == "R") return 0;
+    else if(dmode=="D") return 1;
+    else return 2;
+}
+
 int main(int argc, char * argv[]){
     // manual graph input
     if(argc == 1){
-
         int n, m; double r;
         cout << "Number of nodes: " ;
         cin >> n;
@@ -18,7 +29,7 @@ int main(int argc, char * argv[]){
         SA G = SA(n,r);
         cout << "Introduce edges in the folllowing format : i j " << endl;
         G.readEdges(m);
-        vector<bool> sol_ini = G.getMinDominantSet();
+        int mode = askMode();
         //definim la temperatura
         int temp = 100;
             // ask user for difussion model
@@ -36,7 +47,7 @@ int main(int argc, char * argv[]){
         if (dmode == "IC") modeIC = true;
         else modeIC = false;
         double varEnergia = 50; //la variacio de lenergia sempre es la mateixa ja que afegim o treiem un node
-        G.simulated_annealing(sol_ini,temp,modeIC,varEnergia);
+        G.simulated_annealing(mode,temp,modeIC,varEnergia);
 
     }
     // graph input from file
@@ -49,8 +60,8 @@ int main(int argc, char * argv[]){
         double r; cin >> r; cout << endl;
         
 
-        G.readEdgesFromFile(r, INPUT_PATH + filename);
-
+        G.readEdgesFromFile2(r, INPUT_PATH + filename);
+        int mode = askMode();
        vector<bool> sol_ini = G.getMinDominantSet();
         //definim la temperatura
         int temp = 100;
@@ -69,13 +80,33 @@ int main(int argc, char * argv[]){
         if (dmode == "IC") modeIC = true;
         else modeIC = false;
         double varEnergia = 50; //la variacio de lenergia sempre es la mateixa ja que afegim o treiem un node
-        G.simulated_annealing(sol_ini,temp,modeIC,varEnergia);
+        G.simulated_annealing(mode,temp,modeIC,varEnergia);
+    }
+    else if(argc == 3){
+        string filename = argv[1];
+        SA g = SA();
+        double pr;
+        string dmode;
+        cin >> dmode;
+        if(dmode == "IC") cout << "Introduce Spreading probability: ";
+        else cout << "Introduce Spreading ratio: ";
+        cin >> pr; cout << endl;
+
+        g.readEdgesFromFile2(pr, INPUT_PATH + filename);
+
+        list<int> l;
+        int x;
+        while(cin >> x && x != -1){
+            l.push_back(x);
+        }
+        // begin difusion 
+        if(dmode == "LT")  cout << g.testDifusionLT(l); 
+        else cout << g.testDifusionIC(l);
     }
     else{
         cerr << "Invalid number of arguments." << endl;
         return -1;
     }
-
     return 0;
 
 }
