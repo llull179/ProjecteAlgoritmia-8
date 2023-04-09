@@ -57,6 +57,26 @@ int main(int argc, char * argv[]){
         if(dmode == "IC")  g.beginDifusion_IC_v2(); 
         else g.beginDifusion_LT_v1();   
     }
+    else if(argc == 3){
+        string filename = argv[1];
+        Greedy g = Greedy();
+        double pr;
+
+        if(dmode == "IC") cout << "Introduce Spreading probability: ";
+        else cout << "Introduce Spreading ratio: ";
+        cin >> pr; cout << endl;
+
+        g.readEdgesFromFile2(pr, INPUT_PATH + filename);
+
+        list<int> l;
+        int x;
+        while(cin >> x && x != -1){
+            l.push_back(x);
+        }
+        // begin difusion 
+        if(dmode == "LT")  cout << g.testDifusion(l); 
+        else g.beginDifusion_LT_v1();
+    }
     else{
         cerr << "Invalid number of arguments." << endl;
         return -1;
