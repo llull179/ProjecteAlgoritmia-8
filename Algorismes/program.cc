@@ -33,7 +33,7 @@ int main(int argc, char * argv[]){
 
         Greedy g = Greedy(n,pr);
         cout << "Introduce edges in the folllowing format : i j " << endl;
-        g.readEdges(262111m);
+        g.readEdges(m);
 
         // begin difusion
         if(dmode == "IC")  g.beginDifusion_IC_v2(); 
