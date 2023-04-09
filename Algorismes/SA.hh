@@ -28,7 +28,10 @@ class SA: public difussionGraph {
         void simulated_annealing(int mode, int temp, bool IC, double varEn) {
             int r;
             vector<bool> sol;
-
+             ofstream file;
+            file.open("output_SA");   
+            auto begin = std::chrono::high_resolution_clock::now();
+            
             if(mode == 0) sol = getRandomNodes(IC);
             else if(mode == 1) sol = getMinDominantSet();
             else {
@@ -38,6 +41,10 @@ class SA: public difussionGraph {
                 }
                 else gred.beginDifusion_startingSubset_LT(sol);
             }
+            file << "----------SOLUCIÓ INICIAL:----------" << endl;
+            for(int i = 0; i < sol.size();++i) if (sol[i]) file << i << ' ';
+            file << endl;
+
             vector<int> espai_solucions;
             while(temp > 0) {
                 for (int j = 0; j < 20; ++j) {   
@@ -64,12 +71,13 @@ class SA: public difussionGraph {
                 cout << temp << endl;
                 --temp;
             }           
-
-            cout << "------------------------------------------"  << endl;
-            for(int i = 0; i < sol.size(); ++i) {
-                if (sol[i]) cout << i << endl;
-            }
-           
+            auto end = std::chrono::high_resolution_clock::now();
+            file << "----------SOLUCIÓ FINAL:----------" << endl;
+            for(int i = 0; i < sol.size();++i) if (sol[i]) file << i << ' ';
+            file << endl<< "----------------------------------" << endl;
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+            file << "Difusion completed in " << elapsed.count() * 1e-9 << "s." << endl;
+            file.close();
         }
 
       
