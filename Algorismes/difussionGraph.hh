@@ -116,14 +116,6 @@ class difussionGraph {
             file.close();
         }
 
-
-        // read starting subset of nodes
-        void enqueueStartingSet(){
-            for(int i = 0; i < this->n; i++){
-                if(spreadedNodes[i]) nodesToSpread.push(i);
-            } 
-        }
-
         double computeNodeInfluenceIC(int src, const vector<bool>& inMinimumSubset){
             // Priority queue for vertices that are being processed
             queue <int> Q;
@@ -233,13 +225,21 @@ class difussionGraph {
             }
         }
 
+        
+        // read starting subset of nodes
+        void enqueueStartingSet(){
+            for(int i = 0; i < this->n; i++){
+                if(spreadedNodes[i]) nodesToSpread.push(i);
+            } 
+        }
+
         /*
         PROPAGATION FOR IC MODEL
             - v1: Propagation without saving previous iterations
             - v23: Optimized propagation, remembers past iterations
         */
         int propagateIC_v1(){
-
+            srand ( time(0) );
             int steps = 0;
             int numPropagatedNodes = nodesToSpread.size();
             auto begin = std::chrono::high_resolution_clock::now();
@@ -254,7 +254,6 @@ class difussionGraph {
                         
                         if(not spreadedNodes[g[tmp][i]]){
                             // tries propagation
-                            srand ( time(NULL) );
                             double shot_p = (rand()%100)/100.0;
                             if(shot_p > (1-this-> p)){
                                 // propagates to new node
@@ -277,6 +276,7 @@ class difussionGraph {
         }
 
         int propagateIC_v23(){
+            srand ( time(0) );
             int steps = 0;
             int numPropagatedNodes = nodesToSpread.size();
 
@@ -290,9 +290,8 @@ class difussionGraph {
                         
                         if(not spreadedNodes[g[tmp][i]]){
                             // tries propagation
-                            srand ( time(NULL) );
                             double shot_p = (rand()%100)/100.0;
-                            if(shot_p > (1-this-> p)){
+                            if(shot_p >= (1-this-> p)){
                                 // propagates to new node
                                 numPropagatedNodes++;
                                 nodesToSpread.push(g[tmp][i]);
@@ -431,7 +430,7 @@ class difussionGraph {
         }
         
         vector<bool> getRandomNodes(bool modeIC) {
-            srand ( time(NULL) );
+            srand ( time(0) );
             vector<bool> result(n,false);
             bool findSolution = false;
             while(!findSolution) {
