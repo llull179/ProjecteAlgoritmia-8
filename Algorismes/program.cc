@@ -33,7 +33,7 @@ int main(int argc, char * argv[]){
 
         Greedy g = Greedy(n,pr);
         cout << "Introduce edges in the folllowing format : i j " << endl;
-        g.readEdges(m);
+        g.readEdges(262111m);
 
         // begin difusion
         if(dmode == "IC")  g.beginDifusion_IC_v2(); 
@@ -51,7 +51,7 @@ int main(int argc, char * argv[]){
         else cout << "Introduce Spreading ratio: ";
         cin >> pr; cout << endl;
 
-        g.readEdgesFromFile(pr, INPUT_PATH + filename);
+        g.readEdgesFromFile2(pr, INPUT_PATH + filename);
 
         // begin difusion 
         if(dmode == "IC")  g.beginDifusion_IC_v2(); 
