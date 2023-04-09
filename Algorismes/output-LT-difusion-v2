@@ -1,0 +1,53 @@
+Iteration 1, current subset of nodes: 14
+--------------------
+
+Iteration 2, current subset of nodes: 14 51
+--------------------
+
+Iteration 3, current subset of nodes: 14 51 45
+--------------------
+
+Iteration 4, current subset of nodes: 14 51 45 37
+--------------------
+
+Iteration 5, current subset of nodes: 14 51 45 37 33
+--------------------
+
+Iteration 6, current subset of nodes: 14 51 45 37 33 17
+--------------------
+
+Iteration 7, current subset of nodes: 14 51 45 37 33 17 57
+--------------------
+
+Iteration 8, current subset of nodes: 14 51 45 37 33 17 57 29
+--------------------
+
+Iteration 9, current subset of nodes: 14 51 45 37 33 17 57 29 38
+--------------------
+
+Iteration 10, current subset of nodes: 14 51 45 37 33 17 57 29 38 20
+--------------------
+
+Iteration 11, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40
+--------------------
+
+Iteration 12, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13
+--------------------
+
+Iteration 13, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1
+--------------------
+
+Iteration 14, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1 54
+--------------------
+
+Iteration 15, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1 54 15
+--------------------
+
+Iteration 16, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1 54 15 47
+--------------------
+
+Iteration 17, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1 54 15 47 49
+--------------------
+
+Difusion completed in 17 steps, 0.0157947s.
+Solution size: 17 nodes.
