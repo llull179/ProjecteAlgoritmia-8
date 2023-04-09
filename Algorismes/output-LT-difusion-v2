@@ -1,150 +1,53 @@
-Iteration 1, current subset of nodes: 17
+Iteration 1, current subset of nodes: 14
 --------------------
 
-Iteration 2, current subset of nodes: 17 68
+Iteration 2, current subset of nodes: 14 51
 --------------------
 
-Iteration 3, current subset of nodes: 17 68 45
+Iteration 3, current subset of nodes: 14 51 45
 --------------------
 
-Iteration 4, current subset of nodes: 17 68 45 16
+Iteration 4, current subset of nodes: 14 51 45 37
 --------------------
 
-Iteration 5, current subset of nodes: 17 68 45 16 10
+Iteration 5, current subset of nodes: 14 51 45 37 33
 --------------------
 
-Iteration 6, current subset of nodes: 17 68 45 16 10 64
+Iteration 6, current subset of nodes: 14 51 45 37 33 17
 --------------------
 
-Iteration 7, current subset of nodes: 17 68 45 16 10 64 42
+Iteration 7, current subset of nodes: 14 51 45 37 33 17 57
 --------------------
 
-Iteration 8, current subset of nodes: 17 68 45 16 10 64 42 28
+Iteration 8, current subset of nodes: 14 51 45 37 33 17 57 29
 --------------------
 
-Iteration 9, current subset of nodes: 17 68 45 16 10 64 42 28 90
+Iteration 9, current subset of nodes: 14 51 45 37 33 17 57 29 38
 --------------------
 
-Iteration 10, current subset of nodes: 17 68 45 16 10 64 42 28 90 72
+Iteration 10, current subset of nodes: 14 51 45 37 33 17 57 29 38 20
 --------------------
 
-Iteration 11, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61
+Iteration 11, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40
 --------------------
 
-Iteration 12, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40
+Iteration 12, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13
 --------------------
 
-Iteration 13, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2
+Iteration 13, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1
 --------------------
 
-Iteration 14, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98
+Iteration 14, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1 54
 --------------------
 
-Iteration 15, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94
+Iteration 15, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1 54 15
 --------------------
 
-Iteration 16, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89
+Iteration 16, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1 54 15 47
 --------------------
 
-Iteration 17, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76
+Iteration 17, current subset of nodes: 14 51 45 37 33 17 57 29 38 20 40 13 1 54 15 47 49
 --------------------
 
-Iteration 18, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67
---------------------
-
-Iteration 19, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62
---------------------
-
-Iteration 20, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50
---------------------
-
-Iteration 21, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32
---------------------
-
-Iteration 22, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25
---------------------
-
-Iteration 23, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24
---------------------
-
-Iteration 24, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14
---------------------
-
-Iteration 25, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4
---------------------
-
-Iteration 26, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1
---------------------
-
-Iteration 27, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96
---------------------
-
-Iteration 28, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85
---------------------
-
-Iteration 29, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75
---------------------
-
-Iteration 30, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59
---------------------
-
-Iteration 31, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56
---------------------
-
-Iteration 32, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49
---------------------
-
-Iteration 33, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44
---------------------
-
-Iteration 34, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39
---------------------
-
-Iteration 35, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22
---------------------
-
-Iteration 36, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21
---------------------
-
-Iteration 37, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19
---------------------
-
-Iteration 38, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81
---------------------
-
-Iteration 39, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78
---------------------
-
-Iteration 40, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71
---------------------
-
-Iteration 41, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54
---------------------
-
-Iteration 42, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54 26
---------------------
-
-Iteration 43, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54 26 23
---------------------
-
-Iteration 44, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54 26 23 12
---------------------
-
-Iteration 45, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54 26 23 12 9
---------------------
-
-Iteration 46, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54 26 23 12 9 7
---------------------
-
-Iteration 47, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54 26 23 12 9 7 3
---------------------
-
-Iteration 48, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54 26 23 12 9 7 3 86
---------------------
-
-Iteration 49, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54 26 23 12 9 7 3 86 74
---------------------
-
-Iteration 50, current subset of nodes: 17 68 45 16 10 64 42 28 90 72 61 40 2 98 94 89 76 67 62 50 32 25 24 14 4 1 96 85 75 59 56 49 44 39 22 21 19 81 78 71 54 26 23 12 9 7 3 86 74 60
---------------------
-
+Difusion completed in 17 steps, 0.0157947s.
+Solution size: 17 nodes.

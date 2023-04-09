@@ -98,6 +98,7 @@ class Greedy: public difussionGraph{
             auto end = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
             file << "Difusion completed in " << iteration << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
+            file << "Solution size: " << subset.size() << " nodes." << endl;
             file.close();
 
             cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
@@ -159,6 +160,7 @@ class Greedy: public difussionGraph{
             auto end = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
             file << "Difusion completed in " << iteration << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
+            file << "Solution size: " << subset.size() << " nodes." << endl;
             file.close();
 
             cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
@@ -218,9 +220,15 @@ class Greedy: public difussionGraph{
             auto end = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
             file << "Difusion completed in " << iteration << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
+            file << "Solution size: " << subset.size() << " nodes." << endl;
             file.close();
 
             cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
+        }
+
+        int testDifusion(const list<int>& l){
+            readStartingSubset(l);
+            return propagateLT_v23();
         }
 
         /***********************************************************************************************************

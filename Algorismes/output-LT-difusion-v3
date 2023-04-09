@@ -1,0 +1,32 @@
+Iteration 1, current subset of nodes: 602
+--------------------
+
+Iteration 2, current subset of nodes: 602 1524
+--------------------
+
+Iteration 3, current subset of nodes: 602 1524 287
+--------------------
+
+Iteration 4, current subset of nodes: 602 1524 287 0
+--------------------
+
+Iteration 5, current subset of nodes: 602 1524 287 0 709
+--------------------
+
+Iteration 6, current subset of nodes: 602 1524 287 0 709 2686
+--------------------
+
+Iteration 7, current subset of nodes: 602 1524 287 0 709 2686 713
+--------------------
+
+Iteration 8, current subset of nodes: 602 1524 287 0 709 2686 713 2231
+--------------------
+
+Iteration 9, current subset of nodes: 602 1524 287 0 709 2686 713 2231 2535
+--------------------
+
+Iteration 10, current subset of nodes: 602 1524 287 0 709 2686 713 2231 2535 2698
+--------------------
+
+Difusion completed in 10 steps, 0.0806674s.
+Solution size: 10 nodes.
