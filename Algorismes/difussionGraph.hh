@@ -421,10 +421,14 @@ class difussionGraph {
             for(auto i: sol) {
                 if(i) spreaded ++;
             }
-
-            if (modeIC and propagateIC_v23() == n) return true;
-            else if (not modeIC and (spreaded+propagateLT_v23()) == n)  return true;
-            else return false;
+            int m = propagateLT_v23();
+            cout <<n <<"and"<<m<<endl;
+            if(modeIC && propagateIC_v23() == n) return true;
+            else if(!modeIC && m == n) return true;
+            else {
+                spreadedNodes = aux;
+                return false;
+            }
         }
         
         vector<bool> getRandomNodes(bool modeIC) {
