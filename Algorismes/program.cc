@@ -69,11 +69,13 @@ int main(int argc, char * argv[]){
 
         list<int> l;
         int x;
+        int c = 0;
         while(cin >> x && x != -1){
             l.push_back(x);
+            ++c;
         }
         // begin difusion 
-        if(dmode == "LT")  cout << g.testDifusionLT(l); 
+        if(dmode == "LT")  cout << g.testDifusionLT(l)+c; 
         else cout << g.testDifusionIC(l);
     }
     else{
