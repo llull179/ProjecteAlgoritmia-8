@@ -227,10 +227,15 @@ class Greedy: public difussionGraph{
         INDEPENDENT CASCADE METHODS
         ***********************************************************************************************************/
 
+        int testDifusion(const list<int>& l){
+            readStartingSubset(l);
+            return propagateIC_v1();
+        }
+
+
         void beginDifusion_IC_v1(){
             // initially no nodes propagated
             int propagatedNodes = 0;
-            list <int> subset;
             vector<bool> inSubset(n, false);
 
             // Prints is redirected to a file
@@ -242,9 +247,11 @@ class Greedy: public difussionGraph{
 
 
             int iteration = 0;
+            list<int> minimumSubset;
 
             while(propagatedNodes != this->n){
                 iteration++;
+
                 // pick wich node to propagate
                 double maxInfluence = 0.0;
                 int idx = 0;
@@ -260,16 +267,18 @@ class Greedy: public difussionGraph{
                 }
                 // add node to subset
                 inSubset[idx] = true;
-                subset.push_back(idx);
-                readStartingSubset(subset);
+                minimumSubset.push_back(idx);
+                readStartingSubset(minimumSubset);
 
                 // output to file current subset
                 file << "Iteration " << iteration << ", current subset of nodes:";
-                list<int>::const_iterator it=subset.begin();
-                while(it != subset.end()){
-                    file << " " << (*it);
+                list<int>::iterator it = minimumSubset.begin();
+                while(it != minimumSubset.end()){
+                    file <<  " " << (*it);
                     it++;
-                }file << endl << "--------------------" << endl << endl;
+                }
+                file << endl << "size: " <<  minimumSubset.size() << endl;
+                file << endl << "--------------------" << endl << endl;
 
                 propagatedNodes = propagateIC_v1();                
             }
@@ -293,6 +302,8 @@ class Greedy: public difussionGraph{
             ofstream file;
             file.open("output-IC-difusion-v2");   
 
+            list<int> minimumSubset;
+
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();
             int iteration = 0;
@@ -315,13 +326,16 @@ class Greedy: public difussionGraph{
                 }
                 // add node to subset
                 this->spreadedNodes[idx] = true;
+                minimumSubset.push_back(idx);
                 this->enqueueStartingSet();
 
                 // output to file actual subset of nodes
                 file << "Iteration " << iteration << ", current subset of nodes:";
-                for(int i = 0; i < this->n; i++){
-                    if(spreadedNodes[i]) file << " " << i;
-                } 
+                list<int>::iterator it = minimumSubset.begin();
+                while(it != minimumSubset.end()){
+                    file <<  " " << (*it);
+                    it++;
+                }
                 file << endl << "--------------------" << endl << endl;
                 propagatedNodes = propagateIC_v23();
             }
