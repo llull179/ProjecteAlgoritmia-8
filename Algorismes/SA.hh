@@ -35,12 +35,14 @@ class SA: public difussionGraph {
             else if(mode == 1) sol = getMinDominantSet();
             else {
                 Greedy gred = Greedy(g,p);
-                if(IC) gred.beginDifusion_IC_v2();
-                else gred.beginDifusion_LT_v3();
+                if(IC){
+                    gred.beginDifusion_startingSubset_IC(sol);
+                }
+                else gred.beginDifusion_startingSubset_LT(sol);
             }
             vector<int> espai_solucions;
             while(temp > 0) {
-                for (int j = 0; j < 10; ++j) {   
+                for (int j = 0; j < 20; ++j) {   
                     espai_solucions.clear();
                     for(int i = 0; i < sol.size(); ++i) {
                         if (sol[i]) {
@@ -63,10 +65,12 @@ class SA: public difussionGraph {
                 }
                 cout << temp << endl;
                 --temp;
-            }             
-             for(int i = 0; i < sol.size(); ++i) {
+            }           
+
+            cout << "------------------------------------------"  << endl;
+            for(int i = 0; i < sol.size(); ++i) {
                 if (sol[i]) cout << i << endl;
-             }
+            }
            
         }
 

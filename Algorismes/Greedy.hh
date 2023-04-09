@@ -229,6 +229,50 @@ class Greedy: public difussionGraph{
             cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
         }
 
+        void beginDifusion_startingSubset_LT(vector <bool>& sol){
+            sol.resize(n, false);
+
+            // initially no nodes propagated
+            int propagatedNodes = 0;
+            list<int> subset;
+            vector<bool> inSubset(n, false); 
+            
+            priority_queue < ppair, vector<ppair>, less<ppair> > Q;
+            for (int i = 0; i < this -> n; ++i) {
+                int ni = computeNodeInfluenceLT(i, inSubset);
+                Q.push(make_pair(ni,i));
+            }
+
+            int iteration = 0;
+            list<int> newSubset = subset;
+            int newPropagatedNodes = propagatedNodes;
+            while(propagatedNodes != this->n){
+
+                int idx = Q.top().second;
+                Q.pop();
+                // add node to subset
+                if (not inStartingSubset(idx)) {
+                    inSubset[idx] = true;
+                    subset.push_back(idx);
+                    list<int> l;
+                    l.push_back(idx);
+                    if (modStartingSubset(l) > 0) {
+                        newPropagatedNodes = propagateLT_v23(); 
+                        if (newPropagatedNodes == propagatedNodes) {
+                            subset.pop_back();
+                        }
+                        else propagatedNodes = newPropagatedNodes;
+                    }
+                    else subset.pop_back();
+                }
+            }    
+            list<int>::const_iterator it=subset.begin();
+            while(it != subset.end()){
+                sol[*it] = true;
+                it++;
+            }     
+        }
+
 
 
         /***********************************************************************************************************
@@ -354,6 +398,40 @@ class Greedy: public difussionGraph{
             file.close();
 
             cout << "Difusion ended, check output-IC-difusion file to see benchmarks and the result" << endl;
+        }
+
+        void beginDifusion_startingSubset_IC(vector<bool>& sol){
+            sol.resize(n, false);
+            // initially no nodes propagated
+            int propagatedNodes = 0;
+
+            while(propagatedNodes != this->n){
+                // pick wich node to propagate
+                double maxInfluence = 0.0;
+                int idx = 0;
+                for(int i = 0; i < this->n; i++){
+                    // pick node not propagated yet
+                    if(not this->spreadedNodes[i]){
+                        double nodeInfluence = computeNodeInfluenceIC(i, spreadedNodes);
+                        if(nodeInfluence > maxInfluence){
+                            maxInfluence = nodeInfluence;
+                            idx = i;
+                        }
+                    }
+                }
+                // add node to subset
+                this->spreadedNodes[idx] = true;
+                sol[idx] = true;
+                this->enqueueStartingSet();
+
+                // output to file actual subset of nodes
+                propagatedNodes = propagateIC_v23();
+            }
+
+            cout << "--------------------------------------" << endl;
+            for(int i = 0; i < n; i++){
+                if(sol[i]) cout << " " << i;
+            }
         }
 
         /*
