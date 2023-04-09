@@ -59,7 +59,9 @@ int main(int argc, char * argv[]){
         else cout << "Introduce Spreading ratio: ";
         cin >> pr; cout << endl;
     
-        g.readEdgesFromFile(pr, INPUT_PATH + filename);
+        //g.readEdgesFromFile(pr, INPUT_PATH + filename);
+
+        g.readEdgesFromFile2(pr, INPUT_PATH + filename);
         // begin difusion    
         int mode = askMode();  
 

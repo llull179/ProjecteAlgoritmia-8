@@ -14,7 +14,6 @@ class SA: public difussionGraph {
 
         // constructor and parametrized constructor ------------------------
         SA(){
-            cout << "construct" << endl;
         }
 
         SA(int n, double r){
