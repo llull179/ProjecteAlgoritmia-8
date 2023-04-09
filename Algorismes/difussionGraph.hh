@@ -417,12 +417,14 @@ class difussionGraph {
             vector<bool> aux = spreadedNodes;
             spreadedNodes = sol;
             spreaded = 0;
-            for(auto i: sol) {
-                if(i) spreaded ++;
+            for(int i = 0; i<sol.size(); i++) {
+                if(sol[i]) {
+                    spreaded ++;
+                    nodesToSpread.push(i);
+                }
             }
-            int m = propagateLT_v23();
             if(modeIC && propagateIC_v23() == n) return true;
-            else if(!modeIC && m == n) return true;
+            else if(!modeIC && propagateLT_v23() == n) return true;
             else {
                 spreadedNodes = aux;
                 return false;
@@ -430,13 +432,15 @@ class difussionGraph {
         }
         
         vector<bool> getRandomNodes(bool modeIC) {
-            srand ( time(0) );
+            srand ( time(NULL) );
             vector<bool> result(n,false);
             bool findSolution = false;
             while(!findSolution) {
                 int rand_num = rand() % n;
-                if(!result[rand_num]) result[rand_num] = true;
-                findSolution = isSolution(result,modeIC);
+                if(!result[rand_num]) {
+                    result[rand_num] = true;
+                 findSolution = isSolution(result,modeIC);
+                } 
             }
             spreadedNodes = result;
             return result; 

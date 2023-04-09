@@ -62,7 +62,7 @@ int main(int argc, char * argv[]){
         //g.readEdgesFromFile(pr, INPUT_PATH + filename);
 
         g.readEdgesFromFile2(pr, INPUT_PATH + filename);
-        // begin difusion    
+        // begin difusion        
         int mode = askMode();  
 
         if(dmode == "IC")  g.beginDifusion(true,mode); 
