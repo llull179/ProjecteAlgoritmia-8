@@ -6,7 +6,6 @@
 #include <fstream>
 
 
-typedef pair<double,int> ppair;
 
 
 class SA: public difussionGraph {
