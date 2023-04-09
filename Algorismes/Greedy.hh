@@ -6,6 +6,9 @@
 using namespace std;
 
 
+
+
+
 typedef pair<int,int> ppair;
 
 class Greedy: public difussionGraph{
@@ -37,7 +40,7 @@ class Greedy: public difussionGraph{
         ***********************************************************************************************************/
         
         vector<bool> getGreedySolution(bool modeIC) {
-            if(modeIC) beginDifusion_IC_v2();
+            if(modeIC) beginDifusion_IC_v1();
             else beginDifusion_LT_v2();
             return spreadedNodes;
         }
@@ -226,7 +229,7 @@ class Greedy: public difussionGraph{
             cout << "Difusion ended, check output-LT-difusion file to see benchmarks and the result" << endl;
         }
 
-        int testDifusion(const list<int>& l){
+        int testDifusionLT(const list<int>& l){
             readStartingSubset(l);
             return propagateLT_v23();
         }
@@ -235,20 +238,21 @@ class Greedy: public difussionGraph{
         INDEPENDENT CASCADE METHODS
         ***********************************************************************************************************/
 
-        int testDifusion(const list<int>& l){
+        int testDifusionIC(const list<int>& l){
             readStartingSubset(l);
-            return propagateIC_v1();
+            return propagateIC_v23();
         }
 
 
         void beginDifusion_IC_v1(){
             // initially no nodes propagated
             int propagatedNodes = 0;
-            vector<bool> inSubset(n, false);
+            
 
             // Prints is redirected to a file
             ofstream file;
             file.open("output-IC-difusion-v1");   
+            vector <bool> inMinimumSubset(n, false);
 
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();
@@ -265,8 +269,8 @@ class Greedy: public difussionGraph{
                 int idx = 0;
                 for(int i = 0; i < this->n; i++){
                     // pick node not propagated yet
-                    if(not inSubset[i]){
-                        double nodeInfluence = computeNodeInfluenceIC(i);
+                    if(not inMinimumSubset[i]){
+                        double nodeInfluence = computeNodeInfluenceIC(i, inMinimumSubset);
                         if(nodeInfluence > maxInfluence){
                             maxInfluence = nodeInfluence;
                             idx = i;
@@ -274,7 +278,7 @@ class Greedy: public difussionGraph{
                     }
                 }
                 // add node to subset
-                inSubset[idx] = true;
+                inMinimumSubset[idx] = true;
                 minimumSubset.push_back(idx);
                 readStartingSubset(minimumSubset);
 
@@ -302,6 +306,7 @@ class Greedy: public difussionGraph{
             cout << "Difusion ended, check output-IC-difusion file to see benchmarks and the result" << endl;
         }
 
+        
         void beginDifusion_IC_v2(){
             // initially no nodes propagated
             int propagatedNodes = 0;
@@ -325,7 +330,7 @@ class Greedy: public difussionGraph{
                 for(int i = 0; i < this->n; i++){
                     // pick node not propagated yet
                     if(not this->spreadedNodes[i]){
-                        double nodeInfluence = computeNodeInfluenceIC(i);
+                        double nodeInfluence = computeNodeInfluenceIC(i, spreadedNodes);
                         if(nodeInfluence > maxInfluence){
                             maxInfluence = nodeInfluence;
                             idx = i;
@@ -357,6 +362,7 @@ class Greedy: public difussionGraph{
             cout << "Difusion ended, check output-IC-difusion file to see benchmarks and the result" << endl;
         }
 
+        /*
         void beginDifusion_IC_v3(){
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();
@@ -412,5 +418,6 @@ class Greedy: public difussionGraph{
 
             cout << "Difusion ended, check output-IC-difusion file to see benchmarks and the result" << endl;
         }
+        */
 };
 #endif

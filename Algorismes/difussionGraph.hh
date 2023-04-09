@@ -7,7 +7,7 @@
 #include <fstream>
 #include <list>
 #include <cmath>
-
+#include <ctime>
 
 using namespace std;
 
@@ -19,7 +19,7 @@ class difussionGraph {
         int n, m;
         // graph itself
         vector<vector<int>> g;
-        // visited nodes
+        // visited nodes during propagation
         vector <bool> spreadedNodes;
         // subset of nodes to spread
         queue <int> nodesToSpread;
@@ -124,7 +124,7 @@ class difussionGraph {
             } 
         }
 
-        double computeNodeInfluenceIC(int src){
+        double computeNodeInfluenceIC(int src, const vector<bool>& inMinimumSubset){
             // Priority queue for vertices that are being processed
             queue <int> Q;
             Q.push(src);
@@ -146,7 +146,7 @@ class difussionGraph {
                     // next neightbour
                     int v = g[u][i];
                     // if not visited, mark as visited and enqueue
-                    if(not visited[v]){
+                    if(not visited[v] && not inMinimumSubset[v]){
                         distances[v] = distances[u] + 1;
                         visited[v] = true;
                         Q.push(v);
@@ -254,6 +254,7 @@ class difussionGraph {
                         
                         if(not spreadedNodes[g[tmp][i]]){
                             // tries propagation
+                            srand ( time(NULL) );
                             double shot_p = (rand()%100)/100.0;
                             if(shot_p > (1-this-> p)){
                                 // propagates to new node
@@ -277,9 +278,6 @@ class difussionGraph {
 
         int propagateIC_v23(){
             int steps = 0;
-            for(int i = 0; i < spreadedNodes.size(); ++i) {
-                if(spreadedNodes[i]) nodesToSpread.push(i);
-            } 
             int numPropagatedNodes = nodesToSpread.size();
 
             while(not nodesToSpread.empty()){
@@ -292,6 +290,7 @@ class difussionGraph {
                         
                         if(not spreadedNodes[g[tmp][i]]){
                             // tries propagation
+                            srand ( time(NULL) );
                             double shot_p = (rand()%100)/100.0;
                             if(shot_p > (1-this-> p)){
                                 // propagates to new node

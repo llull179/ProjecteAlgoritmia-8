@@ -1,5 +1,4 @@
 #include "Greedy.hh"
-#include "LocalSearch.hh"
 #include <string>
 #define INPUT_PATH "../Utilities/input-graphs/"
 
@@ -36,7 +35,7 @@ int main(int argc, char * argv[]){
         g.readEdges(m);
 
         // begin difusion
-        if(dmode == "IC")  g.beginDifusion_IC_v2(); 
+        if(dmode == "IC")  g.beginDifusion_IC_v1(); 
         else g.beginDifusion_LT_v2();
 
     }
@@ -74,8 +73,8 @@ int main(int argc, char * argv[]){
             l.push_back(x);
         }
         // begin difusion 
-        if(dmode == "LT")  cout << g.testDifusion(l); 
-        else g.beginDifusion_LT_v1();
+        if(dmode == "LT")  cout << g.testDifusionLT(l); 
+        else cout << g.testDifusionIC(l);
     }
     else{
         cerr << "Invalid number of arguments." << endl;
