@@ -40,7 +40,7 @@ class SA: public difussionGraph {
             }
             vector<int> espai_solucions;
             while(temp > 0) {
-                for (int i = 0; i < 100; ++i) {   
+                for (int j = 0; j < 100; ++j) {   
                     espai_solucions.clear();
                     for(int i = 0; i < sol.size(); ++i) {
                         if (sol[i]) {
