@@ -130,7 +130,7 @@ class LocalSearch: public difussionGraph{
             file << "Difusion completed in " << iteration << " steps, " << elapsed.count() * 1e-9 << "s." << endl;
             file.close();
 
-            cout << "Difusion ended, check output-IC-difusion file to see benchmarks and the result" << endl;
+            cout << "Difusion ended, check "<< fileToOpen << " file to see benchmarks and the result" << endl;
         }
 };
 #endif

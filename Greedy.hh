@@ -56,7 +56,7 @@ class Greedy: public difussionGraph{
             vector<bool> inSubset(n, false);
             // Prints is redirected to a file
             ofstream file;
-            file.open("output-LT-difusion-v1");   
+            file.open("output-LT-difusion");   
 
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();
@@ -114,7 +114,7 @@ class Greedy: public difussionGraph{
             vector<bool> inSubset(n, false);
             // Prints is redirected to a file
             ofstream file;
-            file.open("output-LT-difusion-v2");   
+            file.open("output-LT-difusion");   
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();
             int iteration = 0;
@@ -177,7 +177,7 @@ class Greedy: public difussionGraph{
             vector<bool> inSubset(n, false);
             // Prints is redirected to a file
             ofstream file;
-            file.open("output-LT-difusion-v3");   
+            file.open("output-LT-difusion");   
 
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();

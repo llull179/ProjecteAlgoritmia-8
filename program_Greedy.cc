@@ -81,7 +81,7 @@ int main(int argc, char * argv[]){
 
         // begin difusion 
         if(dmode == "IC")  g.beginDifusion_IC_v2(); 
-        else g.beginDifusion_LT_v1();   
+        else g.beginDifusion_LT_v3();   
     }
 
     // MODE 3: Test Graph propagation
