@@ -53,6 +53,8 @@ int main(int argc, char * argv[]){
         // run SA
         G.simulated_annealingIC(mode,temp,varEnergia);
 
+        cout << "Solution generated in output file" << endl;
+
     }
     // graph input from file
     else if (argc == 2){
@@ -83,6 +85,8 @@ int main(int argc, char * argv[]){
         
         // run SA
         G.simulated_annealingIC(mode,temp,varEnergia);
+
+        cout << "Solution generated in output file" << endl;
     }
 
     // MODE 3: Test Graph propagation

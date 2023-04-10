@@ -71,12 +71,10 @@ class metaheuristicIC: public difusioIC {
                     //no forma part de S (veiem si el podem afegir)
                     else {
                         double prob = pow(10.0, -varEn/temp);
-                        cout << prob << endl;
                         int al = rand()%100;
                         if (al <= prob*100) sol[r] = true;
                     }
                 }
-                cout << temp << endl;
                 --temp;
             }           
             auto end = std::chrono::high_resolution_clock::now();

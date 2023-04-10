@@ -54,21 +54,11 @@ int main(int argc, char * argv[]){
         // run SA
         g.simulated_annealingLT(mode,temp,varEnergia);
 
+        cout << "Solution generated in output file" << endl;
+
     }
     // graph input from file
     else if (argc == 2){
-
-        // ask user for difussion model
-        cout << "Select difusion model:" << endl;
-        cout << "Type <IC> for independent cascade, or <LT> for Linear Threshold" << endl;
-        string dmode;
-        cin >> dmode;
-
-        if (dmode != "LT" && dmode != "IC"){
-            //invalid mode
-            cerr << "Invalid difusion model" << endl;
-            return -1;
-        }
 
         // build graph                  
         string filename = argv[1];
@@ -95,6 +85,8 @@ int main(int argc, char * argv[]){
         
         // run SA
         g.simulated_annealingLT(mode,temp,varEnergia);
+
+        cout << "Solution generated in output file" << endl;
     }
 
     // MODE 3: Test Graph propagation
