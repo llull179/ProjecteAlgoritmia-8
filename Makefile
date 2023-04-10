@@ -1,10 +1,11 @@
-TARGET: program_SA program_Greedy program_localSearch
+TARGET: localSearchLT localSearchIC metaheuristicLT metaheuristicIC difusioLT difusioIC
 
 COMPILER: g++
 
 FLAGS: -std=c++11 -Wall -Wextra
 
-SRCS: program_SA.cc SA.hh program_Greedy.cc Greedy.hh program_localSearch.cc LocalSearch.hh difussionGraph.hh 
+SRCS: localSearchLT.cc localSearchLT.hh localSearchIC.cc localSearchIC.hh metaheuristicLT.cc metaheuristicLT.hh
+metaheuristicIC.cc metaheuristicIC.hh difusioLT.cc difusioLT.hh difusioIC.cc difusioIC.hh
 OBJS: $(SRCS:.cc=.o)
 
 all: $(TARGET)
