@@ -28,7 +28,7 @@ class metaheuristicLT: public difusioLT {
 
         // public methods --------------------------------------------------
 
-        void simulated_annealing(int mode, int temp, double varEn) {
+        void simulated_annealingLT(int mode, int temp, double varEn) {
             int r;
             vector<bool> sol;
             srand ( time(0) );
