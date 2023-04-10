@@ -52,7 +52,7 @@ class greedyLT: public difusioLT{
             vector<bool> inSubset(n, false);
             // Prints is redirected to a file
             ofstream file;
-            file.open("output-LT-difusion");   
+            file.open("output-LT-difusion-greedy");   
 
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();
@@ -110,7 +110,7 @@ class greedyLT: public difusioLT{
             vector<bool> inSubset(n, false);
             // Prints is redirected to a file
             ofstream file;
-            file.open("output-LT-difusion");   
+            file.open("output-LT-difusion-greedy");   
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();
             int iteration = 0;
@@ -173,7 +173,7 @@ class greedyLT: public difusioLT{
             vector<bool> inSubset(n, false);
             // Prints is redirected to a file
             ofstream file;
-            file.open("output-LT-difusion");   
+            file.open("output-LT-difusion-greedy");   
 
             // sets timer
             auto begin = std::chrono::high_resolution_clock::now();

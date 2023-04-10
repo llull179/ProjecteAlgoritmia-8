@@ -33,7 +33,7 @@ class localSearchIC: public difusioIC{
         // Prints is redirected to a file
         ofstream file;
         string fileToOpen;
-        fileToOpen = "output-IC-difusion";
+        fileToOpen = "output-IC-difusion-localSearch";
         file.open(fileToOpen);   
 
         // sets timer

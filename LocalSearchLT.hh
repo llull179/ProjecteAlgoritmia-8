@@ -33,7 +33,7 @@ class localSearchLT: public difusioLT{
         // Prints is redirected to a file
         ofstream file;
         string fileToOpen;
-        fileToOpen = "output-LT-difusion";
+        fileToOpen = "output-LT-difusion-localSearch";
         file.open(fileToOpen);   
 
         // sets timer

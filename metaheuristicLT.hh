@@ -1,3 +1,6 @@
+#ifndef METAHEURISTICLT_HH
+#define METAHEURISTICLT_HH
+
 #include "difusioLT.hh"
 #include "greedyLT.hh"
 #include <cmath>
@@ -30,7 +33,7 @@ class metaheuristicLT: public difusioLT {
             vector<bool> sol;
             srand ( time(0) );
             ofstream file;
-            file.open("output_SA");   
+            file.open("output_SA_LT");   
             auto begin = std::chrono::high_resolution_clock::now();
             if(mode == 0) sol = getRandomNodesLT();
             else if(mode == 1) sol = getMinDominantSet();
@@ -92,3 +95,4 @@ class metaheuristicLT: public difusioLT {
         }
 
 };
+#endif

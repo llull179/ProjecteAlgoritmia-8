@@ -1,5 +1,5 @@
-#ifndef GREEDY_HH
-#define GREEDY_HH
+#ifndef GREEDYIC_HH
+#define GREEDYIC_HH
 #include "difusioIC.hh"
 #include <list>
 #include <fstream>
@@ -53,7 +53,7 @@ class greedyIC: public difusioIC{
 
             // Prints is redirected to a file
             ofstream file;
-            file.open("output-IC-difusion-v1");   
+            file.open("output-IC-difusion-greedy");   
             vector <bool> inMinimumSubset(n, false);
 
             // sets timer
@@ -115,7 +115,7 @@ class greedyIC: public difusioIC{
 
             // Prints is redirected to a file
             ofstream file;
-            file.open("output-IC-difusion-v2");   
+            file.open("output-IC-difusion-greedy");   
 
             list<int> minimumSubset;
 

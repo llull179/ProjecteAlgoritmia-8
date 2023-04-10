@@ -1,3 +1,6 @@
+#ifndef METAHEURISTICIC_HH
+#define METAHEURISTICIC_HH
+
 #include "difusioIC.hh"
 #include "greedyIC.hh"
 #include <cmath>
@@ -30,7 +33,7 @@ class metaheuristicIC: public difusioIC {
             vector<bool> sol;
             srand ( time(0) );
             ofstream file;
-            file.open("output_SA");   
+            file.open("output_SA_IC");   
             auto begin = std::chrono::high_resolution_clock::now();
             if(mode == 0) sol = getRandomNodesIC();
             else if(mode == 1) sol = getMinDominantSet();
@@ -91,3 +94,4 @@ class metaheuristicIC: public difusioIC {
             file.close();
         }
 };
+#endif
